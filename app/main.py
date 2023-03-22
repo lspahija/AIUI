@@ -2,7 +2,6 @@ import json
 import time
 from fastapi import FastAPI, UploadFile, BackgroundTasks, Header
 from fastapi.responses import FileResponse
-import os
 import openai
 import shutil
 import uuid
@@ -10,8 +9,9 @@ from gtts import gTTS
 import ffmpeg
 import base64
 from fastapi.staticfiles import StaticFiles
+import os
 
-AI_COMPLETION_MODEL = "gpt-3.5-turbo"
+AI_COMPLETION_MODEL = os.getenv("AI_COMPLETION_MODEL", "gpt-3.5-turbo")
 app = FastAPI()
 
 
