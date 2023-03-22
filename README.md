@@ -14,7 +14,7 @@ docker run -d -e OPENAI_API_KEY='<YOUR_API_KEY>' -p 8000:80 ultimate_ai_assistan
 
 and then navigate to `localhost:8000`
 
-Quick demo video: https://www.loom.com/share/2bd94941b4924d52889a87ed8301201e
+Quick demo video: https://www.loom.com/share/2bd94941b4924d52889a87ed8301201e  
 Demo currently deployed at https://ultimate-ai-assistant.up.railway.app/
 
 Star the repo if you like it!
