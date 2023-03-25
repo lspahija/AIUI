@@ -14,11 +14,10 @@ docker run -d -e OPENAI_API_KEY='<YOUR_API_KEY>' -p 8000:80 ultimate_ai_assistan
 
 and then navigate to `localhost:8000`
 
-The AI model used defaults to `gpt-3.5-turbo` but you can adjust this by setting the `AI_COMPLETION_MODEL` environment variable (e.g. to `gpt-4` if your `OPENAI_API_KEY` has access to it)
+The AI model used to `gpt-3.5-turbo` but you can adjust this by setting the `AI_COMPLETION_MODEL` environment variable (e.g. to `gpt-4` if your `OPENAI_API_KEY` has access to it)
 
-Demo currently deployed at https://ultimate-ai-assistant.up.railway.app/
+Demo currently deployed at https://ultimate-ai-assistant.up.railway.app/  
 
-Star the repo if you like it!
 
 https://user-images.githubusercontent.com/44912218/227669605-1508a9d4-34ce-455c-a913-f0c9530a9e73.mp4
 
