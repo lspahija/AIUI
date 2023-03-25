@@ -20,3 +20,6 @@ Quick demo video: https://www.loom.com/share/2bd94941b4924d52889a87ed8301201e
 Demo currently deployed at https://ultimate-ai-assistant.up.railway.app/
 
 Star the repo if you like it!
+
+https://user-images.githubusercontent.com/44912218/227669605-1508a9d4-34ce-455c-a913-f0c9530a9e73.mp4
+
