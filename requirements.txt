@@ -5,3 +5,4 @@ python-multipart~=0.0.6
 ffmpeg-python~=0.2.0
 pydantic~=1.10.6
 uvicorn~=0.21.0
+pydub~=0.25.1

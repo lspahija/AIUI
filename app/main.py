@@ -10,9 +10,11 @@ import ffmpeg
 import base64
 from fastapi.staticfiles import StaticFiles
 import os
+from pydub import AudioSegment
 
 AI_COMPLETION_MODEL = os.getenv("AI_COMPLETION_MODEL", "gpt-3.5-turbo")
 LANGUAGE = os.getenv("LANGUAGE", "en")
+AUDIO_SPEED = os.getenv("AUDIO_SPEEDUP", None)
 app = FastAPI()
 
 
@@ -98,8 +100,25 @@ def to_audio(text):
     filepath = f"/tmp/{uuid.uuid4()}.mp3"
     tts.save(filepath)
 
+    speed_adjusted_filepath = adjust_audio_speed(filepath)
+
     print('TTS time:', time.time() - start_time, 'seconds')
-    return filepath
+    return speed_adjusted_filepath
+
+
+def adjust_audio_speed(audio_filepath):
+    if AUDIO_SPEED is None:
+        return audio_filepath
+
+    audio = AudioSegment.from_mp3(audio_filepath)
+    faster_audio = audio.speedup(playback_speed=float(AUDIO_SPEED))
+
+    speed_adjusted_filepath = f"/tmp/{uuid.uuid4()}.mp3"
+    faster_audio.export(speed_adjusted_filepath, format="mp3")
+
+    delete_file(audio_filepath)
+
+    return speed_adjusted_filepath
 
 
 def delete_file(filepath: str):
