@@ -12,6 +12,7 @@ from fastapi.staticfiles import StaticFiles
 import os
 
 AI_COMPLETION_MODEL = os.getenv("AI_COMPLETION_MODEL", "gpt-3.5-turbo")
+LANGUAGE = os.getenv("LANGUAGE", "en")
 app = FastAPI()
 
 
@@ -59,7 +60,7 @@ async def transcribe(audio):
     read_file = open(converted_filepath, "rb")
 
     print("calling whisper")
-    transcription = (await openai.Audio.atranscribe("whisper-1", read_file))["text"]
+    transcription = (await openai.Audio.atranscribe("whisper-1", read_file, language=LANGUAGE))["text"]
     print("STT response received from whisper in", time.time() - start_time, 'seconds')
     print('user prompt:', transcription)
 
@@ -73,7 +74,7 @@ async def get_completion(user_prompt, conversation_thus_far):
     messages = [
         {"role": "system", "content": "You are a helpful assistant."},
         {"role": "user",
-         "content": "You are a helpful assistant with a voice interface. Keep your responses limited to a single sentence of reasonable length. Make sure your response is in English, regardless of the language that the user's input is in."},
+         "content": "You are a helpful assistant with a voice interface. Keep your responses limited to a single sentence of reasonable length. Give your answer in the same language as the immediately preceding prompt."},
     ]
 
     messages.extend(json.loads(base64.b64decode(conversation_thus_far)))
@@ -93,7 +94,7 @@ async def get_completion(user_prompt, conversation_thus_far):
 def to_audio(text):
     start_time = time.time()
 
-    tts = gTTS(text)
+    tts = gTTS(text, lang=LANGUAGE)
     filepath = f"/tmp/{uuid.uuid4()}.mp3"
     tts.save(filepath)
 
