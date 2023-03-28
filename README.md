@@ -16,6 +16,8 @@ and then navigate to `localhost:8000`
 
 The AI model defaults to `gpt-3.5-turbo` but you can adjust this by setting the `AI_COMPLETION_MODEL` environment variable (e.g. to `gpt-4` if your `OPENAI_API_KEY` has access to it)
 
+If you find this project useful, please give it a star.
+
 A demo is currently deployed at https://ultimate-ai-assistant.up.railway.app/  
 
 
