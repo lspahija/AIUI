@@ -2,7 +2,7 @@
 
 This is a web app that gives GPT-4 and GPT-3.5 a voice interface. Anyone can now verbally communicate with ChatGPT.  
 
-Both desktop and mobile browsers are supported, enabling you to talk to GPT-4 on the go.
+Both desktop and mobile browsers are supported, enabling users to talk to GPT-4 on the go.
 
 OpenAI Whisper is used for speech-to-text and OpenAI `gpt-3.5-turbo`/`gpt-4` for completion.
 
