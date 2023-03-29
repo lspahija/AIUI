@@ -74,9 +74,7 @@ async def transcribe(audio):
 async def get_completion(user_prompt, conversation_thus_far):
     start_time = time.time()
     messages = [
-        {"role": "system", "content": "You are a helpful assistant."},
-        {"role": "user",
-         "content": "You are a helpful assistant with a voice interface. Keep your responses limited to a single sentence of reasonable length. Give your answer in the same language as the immediately preceding prompt."},
+        {"role": "system", "content": "You are a helpful assistant with a voice interface. Keep your responses succinct since the user is interacting with you through a voice interface. Your response should be a few sentences at most. Give your answer in the same language as the immediately preceding prompt."}
     ]
 
     messages.extend(json.loads(base64.b64decode(conversation_thus_far)))

@@ -107,7 +107,7 @@ const showErrorMessage = () => {
 const validate = async data => {
     const decodedData = await new AudioContext().decodeAudioData(await data.arrayBuffer())
     const duration = decodedData.duration
-    const minDuration = 0.5
+    const minDuration = 0.4
 
     if (duration < minDuration) throw new Error(`Duration is ${duration}s, which is less than minimum of ${minDuration}s`)
 }
