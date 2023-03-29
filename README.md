@@ -1,22 +1,19 @@
-# The Ultimate AI Assistant
+# VoxGPT
 
-Now you can use GPT-3/GPT-4 from anywhere! Talk to GPT-4 when driving in the car. Bounce ideas off the ultimate
-personal assistant.
+This is a web app that gives GPT-4 and GPT-3.5 a voice interface. Anyone can now verbally communicate with ChatGPT.  
+
+This web app supports mobile browsers, enabling you to talk to GPT-4 on the go.
 
 This uses OpenAI Whisper for speech-to-text and OpenAI `gpt-3.5-turbo`/`gpt-4` for completion.
 
 To get it running:  
-`cd` into `ultimate-ai-assistant` project root directory
-```
-docker build -t ultimate_ai_assistant .  
-docker run -d -e OPENAI_API_KEY='<YOUR_API_KEY>' -p 8000:80 ultimate_ai_assistant
-```
-
-and then navigate to `localhost:8000`
+1. `git clone git@github.com:lspahija/VoxGPT.git`
+2. `cd VoxGPT`
+3. `docker build -t VoxGPT .`
+4. `docker run -d -e OPENAI_API_KEY='<YOUR_API_KEY>' -p 8000:80 VoxGPT`
+5. navigate to `localhost:8000` in a modern browser
 
 The AI model defaults to `gpt-3.5-turbo` but you can adjust this by setting the `AI_COMPLETION_MODEL` environment variable (e.g. to `gpt-4` if your `OPENAI_API_KEY` has access to it)
-
-If you find this project useful, please give it a star.
 
 A demo is currently deployed at https://ultimate-ai-assistant.up.railway.app/  
 
