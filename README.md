@@ -9,8 +9,8 @@ OpenAI Whisper is used for speech-to-text and OpenAI `gpt-3.5-turbo`/`gpt-4` for
 To get it running:  
 1. `git clone git@github.com:lspahija/VoxGPT.git`
 2. `cd VoxGPT`
-3. `docker build -t VoxGPT .`
-4. `docker run -d -e OPENAI_API_KEY='<YOUR_API_KEY>' -p 8000:80 VoxGPT`
+3. `docker build -t voxgpt .`
+4. `docker run -d -e OPENAI_API_KEY='<YOUR_API_KEY>' -p 8000:80 voxgpt`
 5. navigate to `localhost:8000` in a modern browser
 
 The AI model defaults to `gpt-3.5-turbo` but you can adjust this by setting the `AI_COMPLETION_MODEL` environment variable (e.g. to `gpt-4` if your `OPENAI_API_KEY` has access to it)
