@@ -22,7 +22,7 @@ class Transcript(BaseModel):
     text: str
 
 @app.post("/inference")
-async def create_item(transcript: Transcript, background_tasks: BackgroundTasks, conversation: str = Header(default=None)):
+async def infer(transcript: Transcript, background_tasks: BackgroundTasks, conversation: str = Header(default=None)):
     print("received request")
     ai_response = await get_completion(transcript.text, conversation)
     output_audio_filepath = to_audio(ai_response)
