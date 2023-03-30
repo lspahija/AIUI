@@ -11,77 +11,26 @@ import base64
 from fastapi.staticfiles import StaticFiles
 import os
 from pydub import AudioSegment
+from pydantic import BaseModel
 
 AI_COMPLETION_MODEL = os.getenv("AI_COMPLETION_MODEL", "gpt-3.5-turbo")
 LANGUAGE = os.getenv("LANGUAGE", "en")
 AUDIO_SPEED = os.getenv("AUDIO_SPEEDUP", None)
 app = FastAPI()
 
+class Transcript(BaseModel):
+    text: str
 
 @app.post("/inference")
-async def infer(audio: UploadFile, background_tasks: BackgroundTasks,
-                conversation: str = Header(default=None)) -> FileResponse:
+async def create_item(transcript: Transcript, background_tasks: BackgroundTasks, conversation: str = Header(default=None)):
     print("received request")
-    start_time = time.time()
-
-    user_prompt = await transcribe(audio)
-    ai_response = await get_completion(user_prompt, conversation)
-
+    ai_response = await get_completion(transcript.text, conversation)
     output_audio_filepath = to_audio(ai_response)
     background_tasks.add_task(delete_file, output_audio_filepath)
-
-    print('total processing time:', time.time() - start_time, 'seconds')
-
     return FileResponse(path=output_audio_filepath, media_type="audio/mpeg",
-                        headers={"text": construct_response_header(user_prompt, ai_response)})
-
-
-@app.post("/test")
-async def test(audio: UploadFile):
-    print("received request")
-
-    initial_filepath = f"/tmp/{uuid.uuid4()}{audio.filename}"
-
-    with open(initial_filepath, "wb+") as file_object:
-        shutil.copyfileobj(audio.file, file_object)
-
-    print("done")
-
+                        headers={"text": construct_response_header(transcript.text, ai_response)})
 
 app.mount("/", StaticFiles(directory="app/static", html=True), name="static")
-
-
-async def transcribe(audio):
-    start_time = time.time()
-    initial_filepath = f"/tmp/{uuid.uuid4()}{audio.filename}"
-
-    with open(initial_filepath, "wb+") as file_object:
-        shutil.copyfileobj(audio.file, file_object)
-
-    converted_filepath = f"/tmp/ffmpeg-{uuid.uuid4()}{audio.filename}"
-
-    print("running through ffmpeg")
-    (
-        ffmpeg
-        .input(initial_filepath)
-        .output(converted_filepath, loglevel="error")
-        .run()
-    )
-    print("ffmpeg done")
-
-    delete_file(initial_filepath)
-
-    read_file = open(converted_filepath, "rb")
-
-    print("calling whisper")
-    transcription = (await openai.Audio.atranscribe("whisper-1", read_file, language=LANGUAGE))["text"]
-    print("STT response received from whisper in", time.time() - start_time, 'seconds')
-    print('user prompt:', transcription)
-
-    delete_file(converted_filepath)
-
-    return transcription
-
 
 async def get_completion(user_prompt, conversation_thus_far):
     start_time = time.time()
@@ -102,7 +51,6 @@ async def get_completion(user_prompt, conversation_thus_far):
 
     return completion
 
-
 def get_additional_initial_messages():
     match AI_COMPLETION_MODEL:
         case "gpt-3.5-turbo":
@@ -110,7 +58,6 @@ def get_additional_initial_messages():
                      "content": f"Make sure you always strictly provide your responses in the language that corresponds to the ISO-639-1 code: {LANGUAGE}."}]
         case _:
             return []
-
 
 def to_audio(text):
     start_time = time.time()
