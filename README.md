@@ -20,7 +20,7 @@ A demo is currently deployed at https://ultimate-ai-assistant.up.railway.app/
 
 https://user-images.githubusercontent.com/44912218/227669605-1508a9d4-34ce-455c-a913-f0c9530a9e73.mp4
 
-Output audio speed can be adjusted by setting the `AUDIO_SPEED` environment variable e.g. setting this to 1.5 will be result in audio playing back at 1.5x default speed.
+Output audio speed can be adjusted by setting the `AUDIO_SPEED` environment variable e.g. setting this to 1.5 will result in audio playing back at 1.5x default speed.
 
 You can configure the language by setting the `LANGUAGE` environment variable to the corresponding ISO-639-1 code. The default is `en`. The supported languages are:
 
