@@ -36,6 +36,18 @@ async def infer(audio: UploadFile, background_tasks: BackgroundTasks,
                         headers={"text": construct_response_header(user_prompt, ai_response)})
 
 
+@app.post("/test")
+async def test(audio: UploadFile):
+    print("received request")
+
+    initial_filepath = f"/tmp/{uuid.uuid4()}{audio.filename}"
+
+    with open(initial_filepath, "wb+") as file_object:
+        shutil.copyfileobj(audio.file, file_object)
+
+    print("done")
+
+
 app.mount("/", StaticFiles(directory="app/static", html=True), name="static")
 
 
@@ -74,11 +86,11 @@ async def transcribe(audio):
 async def get_completion(user_prompt, conversation_thus_far):
     start_time = time.time()
     messages = [
-        {"role": "system", "content": "You are a helpful assistant with a voice interface. Keep your responses succinct since the user is interacting with you through a voice interface. Your response should be a few sentences at most. Give your answer in the same language as the immediately preceding prompt."}
+        {"role": "system",
+         "content": "You are a helpful assistant with a voice interface. Keep your responses succinct since the user is interacting with you through a voice interface. Your response should be a few sentences at most. Give your answer in the same language as the immediately preceding prompt."}
     ]
-
+    messages.extend(get_additional_initial_messages())
     messages.extend(json.loads(base64.b64decode(conversation_thus_far)))
-
     messages.append({"role": "user", "content": user_prompt})
 
     print("calling", AI_COMPLETION_MODEL)
@@ -89,6 +101,15 @@ async def get_completion(user_prompt, conversation_thus_far):
     print(AI_COMPLETION_MODEL, "response:", completion)
 
     return completion
+
+
+def get_additional_initial_messages():
+    match AI_COMPLETION_MODEL:
+        case "gpt-3.5-turbo":
+            return [{"role": "user",
+                     "content": "Make sure you strictly give your answer in the same language as the immediately preceding prompt."}]
+        case _:
+            return []
 
 
 def to_audio(text):
