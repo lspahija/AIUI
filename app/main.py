@@ -14,7 +14,7 @@ from pydub import AudioSegment
 
 AI_COMPLETION_MODEL = os.getenv("AI_COMPLETION_MODEL", "gpt-3.5-turbo")
 LANGUAGE = os.getenv("LANGUAGE", "en")
-AUDIO_SPEED = os.getenv("AUDIO_SPEEDUP", None)
+AUDIO_SPEED = os.getenv("AUDIO_SPEED", None)
 app = FastAPI()
 
 
