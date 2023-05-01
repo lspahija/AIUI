@@ -55,7 +55,7 @@ function base64Decode(base64) {
 const handleResponse = res => {
     if (!res.ok) return Promise.reject(res)
 
-    let newMessages = JSON.parse(base64Decode(res.headers.get("text")))
+    const newMessages = JSON.parse(base64Decode(res.headers.get("text")))
     conversationThusFar.push(...newMessages)
     return res.blob()
 }
