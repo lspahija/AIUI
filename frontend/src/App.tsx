@@ -1,27 +1,31 @@
 import {useMicVAD, utils} from "@ricky0123/vad-react"
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
-import {useEffect} from 'react';
+import {useEffect, useState} from 'react';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faMicrophone} from '@fortawesome/free-solid-svg-icons';
+
+const backendHost = "http://localhost:8000"
 
 function App() {
-    const vad = useMicVAD({
+    useMicVAD({
         startOnLoad: true,
         onSpeechStart: async () => {
             console.log("speech started")
+            setSpeaking(true)
             await playSilence()
         },
         onSpeechEnd: async audio => {
             console.log("speech ended")
-            const wavBuffer = utils.encodeWAV(audio)
-            const audioBlob = new Blob([wavBuffer], {type: 'audio/wav'});
-            await sendData(audioBlob)
+            setSpeaking(false)
+            await sendForInference(audio)
         },
     })
 
     const audio = new Audio()
     const conversationThusFar = []
     let silenceAudioBlob: Blob
+
+    const [speaking, setSpeaking] = useState(false)
 
     useEffect(() => {
         fetchSilence();
@@ -30,18 +34,20 @@ function App() {
     //https://stackoverflow.com/a/57547943
     const playSilence = async () => {
         if (silenceAudioBlob) audio.src = URL.createObjectURL(silenceAudioBlob)
-        else audio.src = "http://localhost:8000/silence.mp3"
+        else audio.src = `${backendHost}/silence.mp3`
 
         await audio.play()
     }
 
-    const sendData = async data => {
-        await validate(data)
+    const sendForInference = async audio => {
+        const wavBuffer = utils.encodeWAV(audio)
+        const blob = new Blob([wavBuffer], {type: 'audio/wav'});
+        await validate(blob)
 
         console.log("sending data")
-        fetch("http://localhost:8000/inference", {
+        fetch(`${backendHost}/inference`, {
             method: "POST",
-            body: createBody(data),
+            body: createBody(blob),
             headers: {
                 'conversation': base64Encode(JSON.stringify(conversationThusFar))
             }
@@ -97,7 +103,7 @@ function App() {
     const fetchSilence = async () => {
         try {
             console.log("fetching silence")
-            const response = await fetch("http://localhost:8000/silence.mp3")
+            const response = await fetch(`${backendHost}/silence.mp3`)
             silenceAudioBlob = await response.blob()
         } catch (error) {
             console.error("Error fetching silence.mp3:", error)
@@ -106,28 +112,14 @@ function App() {
 
     return (
         <>
-            <div>
-                <a href="https://vitejs.dev" target="_blank">
-                    <img src={viteLogo} className="logo" alt="Vite logo"/>
-                </a>
-                <a href="https://react.dev" target="_blank">
-                    <img src={reactLogo} className="logo react" alt="React logo"/>
-                </a>
+            <div className={`card${speaking ? " speaking" : ""}`}>
+                <div className="icon-container">
+                    <FontAwesomeIcon className="speaker-icon" icon={faMicrophone}/>
+                </div>
             </div>
-            <h1>Vite + React</h1>
-            <div className="card">
-                <button onClick={vad.toggle}>
-                    toggle VAD
-                </button>
-                <p>
-                    Edit <code>src/App.tsx</code> and save to test HMR
-                </p>
-            </div>
-            <p className="read-the-docs">
-                Click on the Vite and React logos to learn more
-            </p>
         </>
-    )
+    );
+
 }
 
 export default App
