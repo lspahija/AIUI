@@ -17,7 +17,7 @@ function App() {
         onSpeechEnd: async audio => {
             console.log("speech ended")
             setSpeaking(false)
-            await sendForInference(audio)
+            await processAudio(audio)
         },
     })
 
@@ -26,6 +26,8 @@ function App() {
     let silenceAudioBlob: Blob
 
     const [speaking, setSpeaking] = useState(false)
+    const [processingAudio, setProcessingAudio] = useState(false)
+    const [error, setError] = useState("")
 
     useEffect(() => {
         fetchSilence();
@@ -39,7 +41,9 @@ function App() {
         await audio.play()
     }
 
-    const sendForInference = async audio => {
+    const processAudio = async audio => {
+        setProcessingAudio(true)
+
         const wavBuffer = utils.encodeWAV(audio)
         const blob = new Blob([wavBuffer], {type: 'audio/wav'});
         await validate(blob)
@@ -85,11 +89,19 @@ function App() {
 
     const handleSuccess = async blob => {
         audio.src = URL.createObjectURL(blob)
+
+        setProcessingAudio(false)
+
         await audio.play()
     }
 
     const handleError = error => {
         console.log(`error encountered: ${error}`)
+
+        setProcessingAudio(false)
+
+        setError(`Error occurred: ${error}`)
+        setTimeout(() => setError(""), 2000)
     }
 
     const validate = async data => {
@@ -113,9 +125,16 @@ function App() {
     return (
         <>
             <div className={`card${speaking ? " speaking" : ""}`}>
-                <div className="icon-container">
-                    <FontAwesomeIcon className="speaker-icon" icon={faMicrophone}/>
-                </div>
+                {
+                    processingAudio
+                        ?
+                        <div className="spinner"></div>
+                        :
+                        <div className="icon-container">
+                            <FontAwesomeIcon className="speaker-icon" icon={faMicrophone}/>
+                        </div>
+                }
+                <div className="error-message">{error}</div>
             </div>
         </>
     );
