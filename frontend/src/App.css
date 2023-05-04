@@ -1,0 +1,70 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.card {
+  padding: 2em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon-container {
+  width: 9rem;
+  height: 9rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 4px solid #ccc;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+  transition: border-color 0.4s ease, background-color 0.4s ease;
+}
+
+.speaker-icon {
+  font-size: 6rem;
+  color: #ccc;
+  transition: color 0.4s ease;
+}
+
+.speaking .icon-container {
+  border-color: #4CAF50;
+  background-color: rgba(76, 175, 80, 0.1);
+}
+
+.speaking .speaker-icon {
+  color: #4CAF50;
+}
+
+.spinner {
+    display: block;
+    width: 8rem;
+    height: 8rem;
+    border: 0.5rem solid rgba(255, 255, 255, .3);
+    border-radius: 50%;
+    border-top-color: #0495a2;
+    animation: spin 1s ease-in-out infinite;
+    -webkit-animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes spin {
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+.error-message {
+    color: #960d0d;
+    text-align: center;
+    margin-top: 1rem;
+}
