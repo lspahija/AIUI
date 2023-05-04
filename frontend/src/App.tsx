@@ -5,7 +5,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faMicrophone} from '@fortawesome/free-solid-svg-icons';
 
 function App() {
-    useMicVAD({
+    const vad = useMicVAD({
         userSpeakingThreshold: 0.95,
         startOnLoad: true,
         onSpeechStart: async () => {
@@ -125,7 +125,7 @@ function App() {
         <>
             <div className={`card${speaking ? " speaking" : ""}`}>
                 {
-                    processingAudio
+                    processingAudio || vad.loading
                         ?
                         <div className="spinner"></div>
                         :
