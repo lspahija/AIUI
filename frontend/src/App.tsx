@@ -4,10 +4,9 @@ import {useEffect, useState} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faMicrophone} from '@fortawesome/free-solid-svg-icons';
 
-const backendHost = "http://localhost:8000"
-
 function App() {
     useMicVAD({
+        userSpeakingThreshold: 0.9,
         startOnLoad: true,
         onSpeechStart: async () => {
             console.log("speech started")
@@ -36,7 +35,7 @@ function App() {
     //https://stackoverflow.com/a/57547943
     const playSilence = async () => {
         if (silenceAudioBlob) audio.src = URL.createObjectURL(silenceAudioBlob)
-        else audio.src = `${backendHost}/silence.mp3`
+        else audio.src = "/silence.mp3"
 
         await audio.play()
     }
@@ -49,7 +48,7 @@ function App() {
         await validate(blob)
 
         console.log("sending data")
-        fetch(`${backendHost}/inference`, {
+        fetch("inference", {
             method: "POST",
             body: createBody(blob),
             headers: {
@@ -115,7 +114,7 @@ function App() {
     const fetchSilence = async () => {
         try {
             console.log("fetching silence")
-            const response = await fetch(`${backendHost}/silence.mp3`)
+            const response = await fetch("/silence.mp3")
             silenceAudioBlob = await response.blob()
         } catch (error) {
             console.error("Error fetching silence.mp3:", error)
