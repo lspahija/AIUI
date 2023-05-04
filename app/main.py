@@ -12,6 +12,7 @@ from fastapi.staticfiles import StaticFiles
 import os
 from pydub import AudioSegment
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import RedirectResponse
 
 AI_COMPLETION_MODEL = os.getenv("AI_COMPLETION_MODEL", "gpt-3.5-turbo")
 LANGUAGE = os.getenv("LANGUAGE", "en")
@@ -55,7 +56,12 @@ async def infer(audio: UploadFile, background_tasks: BackgroundTasks,
                         headers={"text": construct_response_header(user_prompt, ai_response)})
 
 
-app.mount("/", StaticFiles(directory="app/static", html=True), name="static")
+@app.get("/")
+async def root():
+    return RedirectResponse(url="/index.html")
+
+
+app.mount("/", StaticFiles(directory="/app/frontend/dist"), name="static")
 
 
 async def transcribe(audio):
