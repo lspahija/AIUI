@@ -16,7 +16,7 @@ import requests
 
 AI_COMPLETION_MODEL = os.getenv("AI_COMPLETION_MODEL", "gpt-3.5-turbo")
 ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY", None)
-TTS_PROVIDER = os.getenv("TTS_PROVIDER", "ELEVENLABS")
+TTS_PROVIDER = os.getenv("TTS_PROVIDER", "STREAMELEMENTS")
 LANGUAGE = os.getenv("LANGUAGE", "en")
 AUDIO_SPEED = os.getenv("AUDIO_SPEED", None)
 app = FastAPI()
