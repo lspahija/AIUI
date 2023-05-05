@@ -87,11 +87,13 @@ function App() {
     }
 
     const handleSuccess = async blob => {
-        audio.src = URL.createObjectURL(blob)
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)()
+        const source = audioContext.createBufferSource()
+        source.buffer = await audioContext.decodeAudioData(await blob.arrayBuffer())
+        source.connect(audioContext.destination)
+        source.start(0);
 
         setProcessingAudio(false)
-
-        await audio.play()
     }
 
     const handleError = error => {
