@@ -1,6 +1,6 @@
 import {useMicVAD, utils} from "@ricky0123/vad-react"
 import './App.css'
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faMicrophone} from '@fortawesome/free-solid-svg-icons';
 
@@ -11,7 +11,6 @@ function App() {
         onSpeechStart: async () => {
             console.log("speech started")
             setSpeaking(true)
-            await playSilence()
         },
         onSpeechEnd: async audio => {
             console.log("speech ended")
@@ -20,25 +19,11 @@ function App() {
         },
     })
 
-    const audio = new Audio()
     const conversationThusFar = []
-    let silenceAudioBlob: Blob
 
     const [speaking, setSpeaking] = useState(false)
     const [processingAudio, setProcessingAudio] = useState(false)
     const [error, setError] = useState("")
-
-    useEffect(() => {
-        fetchSilence();
-    }, [])
-
-    //https://stackoverflow.com/a/57547943
-    const playSilence = async () => {
-        if (silenceAudioBlob) audio.src = URL.createObjectURL(silenceAudioBlob)
-        else audio.src = "/silence.mp3"
-
-        await audio.play()
-    }
 
     const processAudio = async audio => {
         setProcessingAudio(true)
@@ -111,16 +96,6 @@ function App() {
         const minDuration = 0.4
 
         if (duration < minDuration) throw new Error(`Duration is ${duration}s, which is less than minimum of ${minDuration}s`)
-    }
-
-    const fetchSilence = async () => {
-        try {
-            console.log("fetching silence")
-            const response = await fetch("/silence.mp3")
-            silenceAudioBlob = await response.blob()
-        } catch (error) {
-            console.error("Error fetching silence.mp3:", error)
-        }
     }
 
     return (

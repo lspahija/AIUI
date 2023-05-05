@@ -16,8 +16,6 @@ RUN cp \
     node_modules/onnxruntime-web/dist/*.wasm \
     dist
 
-COPY ./app/static/silence.mp3 dist/
-
 FROM tiangolo/uvicorn-gunicorn-fastapi:python3.10-slim
 
 WORKDIR /
