@@ -12,8 +12,11 @@ from fastapi.staticfiles import StaticFiles
 import os
 from pydub import AudioSegment
 from fastapi.responses import RedirectResponse
+import requests
 
 AI_COMPLETION_MODEL = os.getenv("AI_COMPLETION_MODEL", "gpt-3.5-turbo")
+ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY", None)
+TTS_PROVIDER = os.getenv("TTS_PROVIDER", "ELEVENLABS")
 LANGUAGE = os.getenv("LANGUAGE", "en")
 AUDIO_SPEED = os.getenv("AUDIO_SPEED", None)
 app = FastAPI()
@@ -107,11 +110,41 @@ def get_additional_initial_messages():
 
 
 def to_audio(text):
+    if TTS_PROVIDER == "gTTS":
+        return gtts_to_audio(text)
+    elif TTS_PROVIDER == "ELEVENLABS":
+        return elevenlabs_to_audio(text)
+    else:
+        raise ValueError(f"env var TTS_PROVIDER set to unsupported value: {TTS_PROVIDER}")
+
+
+def gtts_to_audio(text):
     start_time = time.time()
 
     tts = gTTS(text, lang=LANGUAGE)
     filepath = f"/tmp/{uuid.uuid4()}.mp3"
     tts.save(filepath)
+
+    speed_adjusted_filepath = adjust_audio_speed(filepath)
+
+    print('TTS time:', time.time() - start_time, 'seconds')
+    return speed_adjusted_filepath
+
+
+def elevenlabs_to_audio(text):
+    start_time = time.time()
+
+    headers = {
+        "Content-Type": "application/json",
+        "xi-api-key": ELEVENLABS_API_KEY,
+    }
+
+    tts_url = f"https://api.elevenlabs.io/v1/text-to-speech/EXAVITQu4vr4xnSDxMaL"
+    response = requests.post(tts_url, headers=headers, json={"text": text})
+
+    filepath = f"/tmp/{uuid.uuid4()}.mp3"
+    with open(filepath, "wb") as f:
+        f.write(response.content)
 
     speed_adjusted_filepath = adjust_audio_speed(filepath)
 
