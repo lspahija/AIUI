@@ -5,6 +5,8 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faMicrophone} from '@fortawesome/free-solid-svg-icons';
 
 function App() {
+    let source: AudioBufferSourceNode
+
     const vad = useMicVAD({
         positiveSpeechThreshold: 0.95,
         negativeSpeechThreshold: 0.80,
@@ -12,6 +14,7 @@ function App() {
         onSpeechStart: async () => {
             console.log("speech started")
             setSpeaking(true)
+            if (source) source.stop(0)
         },
         onSpeechEnd: async audio => {
             console.log("speech ended")
@@ -74,7 +77,7 @@ function App() {
 
     const handleSuccess = async blob => {
         const audioContext = new (window.AudioContext || window.webkitAudioContext)()
-        const source = audioContext.createBufferSource()
+        source = audioContext.createBufferSource()
         source.buffer = await audioContext.decodeAudioData(await blob.arrayBuffer())
         source.connect(audioContext.destination)
         source.start(0);
