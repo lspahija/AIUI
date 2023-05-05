@@ -8,8 +8,9 @@ function App() {
     let source: AudioBufferSourceNode
 
     const vad = useMicVAD({
-        positiveSpeechThreshold: 0.95,
-        negativeSpeechThreshold: 0.80,
+        positiveSpeechThreshold: 0.90,
+        negativeSpeechThreshold: 0.75,
+        minSpeechFrames: 4,
         startOnLoad: true,
         onSpeechStart: async () => {
             console.log("speech started")
@@ -21,6 +22,10 @@ function App() {
             setSpeaking(false)
             await processAudio(audio)
         },
+        onVADMisfire: () => {
+            console.log("vad misfire")
+            setSpeaking(false)
+        }
     })
 
     const conversationThusFar = []
