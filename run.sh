@@ -14,6 +14,6 @@ elif [ "$1" == "ELEVENLABS" ]; then
 elif [ "$1" == "STREAMELEMENTS" ]; then
     docker run -d -e OPENAI_API_KEY="${OPENAI_API_KEY}" -e TTS_PROVIDER="STREAMELEMENTS" -p 8000:80 aiui
 else
-    echo "Invalid argument. Please provide either 'gTTS' or 'ELEVENLABS'."
+    echo "Invalid argument. Please provide either 'gTTS', 'ELEVENLABS' or 'STREAMELEMENTS'."
     exit 1
 fi
