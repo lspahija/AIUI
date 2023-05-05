@@ -6,7 +6,8 @@ import {faMicrophone} from '@fortawesome/free-solid-svg-icons';
 
 function App() {
     const vad = useMicVAD({
-        userSpeakingThreshold: 0.95,
+        positiveSpeechThreshold: 0.95,
+        negativeSpeechThreshold: 0.80,
         startOnLoad: true,
         onSpeechStart: async () => {
             console.log("speech started")
