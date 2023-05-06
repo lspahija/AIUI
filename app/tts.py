@@ -31,7 +31,6 @@ async def to_speech(text):
 
 
 async def _edge_tts_to_speech(text):
-    print("edge tts being used")
     start_time = time.time()
 
     communicate = edge_tts.Communicate(text, EDGETTS_VOICE)
