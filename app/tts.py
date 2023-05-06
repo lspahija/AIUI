@@ -9,19 +9,12 @@ import edge_tts
 
 from app.util import delete_file
 
-
-def _get_tts_provider():
-    if LANGUAGE != "en":
-        return "gTTS"
-
-    tts_provider = os.getenv("TTS_PROVIDER", "STREAMELEMENTS")
-    return tts_provider
-
-
 LANGUAGE = os.getenv("LANGUAGE", "en")
-TTS_PROVIDER = _get_tts_provider()
-ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY", None)
 AUDIO_SPEED = os.getenv("AUDIO_SPEED", None)
+TTS_PROVIDER = os.getenv("TTS_PROVIDER", "STREAMELEMENTS")
+
+ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY", None)
+EDGETTS_VOICE = os.getenv("EDGETTS_VOICE", "en-US-ChristopherNeural")
 
 
 async def to_speech(text):
@@ -41,7 +34,7 @@ async def _edge_tts_to_speech(text):
     print("edge tts being used")
     start_time = time.time()
 
-    communicate = edge_tts.Communicate(text, "en-US-ChristopherNeural")
+    communicate = edge_tts.Communicate(text, EDGETTS_VOICE)
     filepath = f"/tmp/{uuid.uuid4()}.mp3"
     await communicate.save(filepath)
 
