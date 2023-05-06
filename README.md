@@ -1,5 +1,7 @@
 # AIUI: A Natural Language Voice Interface for AI
 
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/XxIOWs?referralCode=VcOv5G)
+
 Point-and-click user interfaces will soon be a thing of the past. The main user interface of the near future will be entirely voice-based.
 
 AIUI is a platform that aims to enable seamless two-way verbal communication with AI models. It works in both desktop and mobile browsers and currently supports GPT-4 and GPT-3.5 models.
