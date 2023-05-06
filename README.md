@@ -30,4 +30,5 @@ We welcome contributions from the community! If you'd like to contribute, please
 - Report any issues you encounter
 - Suggest new features or improvements
 - Submit pull requests for bug fixes or new features 
-- Please follow the standard GitHub workflow for submitting issues and pull requests. And don't forget to ⭐️ the repo if you find it useful!
+
+Don't forget to ⭐️ the repo if you find it useful!
