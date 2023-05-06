@@ -8,8 +8,17 @@ from pydub import AudioSegment
 
 from app.util import delete_file
 
+
+def _get_tts_provider():
+    if LANGUAGE == "en":
+        return "gTTS"
+
+    tts_provider = os.getenv("TTS_PROVIDER", "STREAMELEMENTS")
+    return tts_provider
+
+
 LANGUAGE = os.getenv("LANGUAGE", "en")
-TTS_PROVIDER = os.getenv("TTS_PROVIDER", "STREAMELEMENTS")
+TTS_PROVIDER = _get_tts_provider()
 ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY", None)
 AUDIO_SPEED = os.getenv("AUDIO_SPEED", None)
 
@@ -63,7 +72,7 @@ def _elevenlabs_to_speech(text):
 def _streamelements_to_speech(text):
     start_time = time.time()
 
-    response = requests.get(f"https://api.streamelements.com/kappa/v2/speech?voice=Brian&text={text}")
+    response = requests.get(f"https://api.streamelements.com/kappa/v2/speech?voice=Salli&text={text}")
 
     filepath = f"/tmp/{uuid.uuid4()}.mp3"
     with open(filepath, "wb") as f:
