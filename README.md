@@ -11,7 +11,7 @@ To interact with AIUI, simply start speaking after navigating to the [app](https
 1. `git clone git@github.com:lspahija/AIUI.git`
 2. `cd AIUI`
 3. `docker build -t aiui .`
-4. `docker run -d -e OPENAI_API_KEY='<YOUR_API_KEY>' ELEVENLABS_API_KEY='<YOUR_API_KEY>' -p 8000:80 aiui`
+4. `docker run -d -e OPENAI_API_KEY='<YOUR_API_KEY>' TTS_PROVIDER='ELEVENLABS' ELEVENLABS_API_KEY='<YOUR_API_KEY>' -p 8000:80 aiui`
 5. navigate to `localhost:8000` in a modern browser
 
 The AI model defaults to `gpt-3.5-turbo` but you can adjust this by setting the `AI_COMPLETION_MODEL` environment variable (e.g. to `gpt-4` if your `OPENAI_API_KEY` has access to it)
