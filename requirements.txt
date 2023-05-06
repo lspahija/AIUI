@@ -7,3 +7,4 @@ pydantic~=1.10.7
 uvicorn~=0.22.0
 pydub~=0.25.1
 requests~=2.30.0
+edge-tts~=6.1.5

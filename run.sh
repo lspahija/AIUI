@@ -16,6 +16,8 @@ elif [ "$1" == "ELEVENLABS" ]; then
     docker run -d -e OPENAI_API_KEY="${OPENAI_API_KEY}" -e TTS_PROVIDER="ELEVENLABS" -e ELEVENLABS_API_KEY="${ELEVENLABS_API_KEY}" -p 8000:80 --label "$CONTAINER_LABEL" aiui
 elif [ "$1" == "STREAMELEMENTS" ]; then
     docker run -d -e OPENAI_API_KEY="${OPENAI_API_KEY}" -e TTS_PROVIDER="STREAMELEMENTS" -p 8000:80 --label "$CONTAINER_LABEL" aiui
+elif [ "$1" == "EDGETTS" ]; then
+    docker run -d -e OPENAI_API_KEY="${OPENAI_API_KEY}" -e TTS_PROVIDER="EDGETTS" -p 8000:80 --label "$CONTAINER_LABEL" aiui
 else
     echo "Invalid argument. Please provide either 'gTTS', 'ELEVENLABS' or 'STREAMELEMENTS'."
     exit 1

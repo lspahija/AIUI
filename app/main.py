@@ -24,7 +24,7 @@ async def infer(audio: UploadFile, background_tasks: BackgroundTasks,
     user_prompt = await transcribe(audio)
     ai_response = await get_completion(user_prompt, conversation)
 
-    output_audio_filepath = to_speech(ai_response)
+    output_audio_filepath = await to_speech(ai_response)
     background_tasks.add_task(delete_file, output_audio_filepath)
 
     print('total processing time:', time.time() - start_time, 'seconds')

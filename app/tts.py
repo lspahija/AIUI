@@ -5,12 +5,13 @@ import uuid
 import requests
 from gtts import gTTS
 from pydub import AudioSegment
+import edge_tts
 
 from app.util import delete_file
 
 
 def _get_tts_provider():
-    if LANGUAGE == "en":
+    if LANGUAGE != "en":
         return "gTTS"
 
     tts_provider = os.getenv("TTS_PROVIDER", "STREAMELEMENTS")
@@ -23,15 +24,31 @@ ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY", None)
 AUDIO_SPEED = os.getenv("AUDIO_SPEED", None)
 
 
-def to_speech(text):
+async def to_speech(text):
     if TTS_PROVIDER == "gTTS":
         return _gtts_to_speech(text)
     elif TTS_PROVIDER == "ELEVENLABS":
         return _elevenlabs_to_speech(text)
     elif TTS_PROVIDER == "STREAMELEMENTS":
         return _streamelements_to_speech(text)
+    elif TTS_PROVIDER == "EDGETTS":
+        return await _edge_tts_to_speech(text)
     else:
         raise ValueError(f"env var TTS_PROVIDER set to unsupported value: {TTS_PROVIDER}")
+
+
+async def _edge_tts_to_speech(text):
+    print("edge tts being used")
+    start_time = time.time()
+
+    communicate = edge_tts.Communicate(text, "en-US-ChristopherNeural")
+    filepath = f"/tmp/{uuid.uuid4()}.mp3"
+    await communicate.save(filepath)
+
+    speed_adjusted_filepath = _adjust_audio_speed(filepath)
+
+    print('TTS time:', time.time() - start_time, 'seconds')
+    return speed_adjusted_filepath
 
 
 def _gtts_to_speech(text):
