@@ -14,6 +14,7 @@ AUDIO_SPEED = os.getenv("AUDIO_SPEED", None)
 TTS_PROVIDER = os.getenv("TTS_PROVIDER", "STREAMELEMENTS")
 
 ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY", None)
+ELEVENLABS_VOICE = os.getenv("ELEVENLABS_VOICE", "EXAVITQu4vr4xnSDxMaL")
 EDGETTS_VOICE = os.getenv("EDGETTS_VOICE", "en-US-ChristopherNeural")
 
 
@@ -60,7 +61,7 @@ def _elevenlabs_to_speech(text):
     start_time = time.time()
 
     response = requests.post(
-        url="https://api.elevenlabs.io/v1/text-to-speech/EXAVITQu4vr4xnSDxMaL",
+        url=f"https://api.elevenlabs.io/v1/text-to-speech/{ELEVENLABS_VOICE}",
         headers={
             "Content-Type": "application/json",
             "xi-api-key": ELEVENLABS_API_KEY,
