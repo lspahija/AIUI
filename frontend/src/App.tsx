@@ -8,6 +8,7 @@ function App() {
     let source: AudioBufferSourceNode
 
     const vad = useMicVAD({
+        preSpeechPadFrames: 5,
         positiveSpeechThreshold: 0.90,
         negativeSpeechThreshold: 0.75,
         minSpeechFrames: 4,
