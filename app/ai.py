@@ -10,6 +10,9 @@ LANGUAGE = os.getenv("LANGUAGE", "en")
 
 
 async def get_completion(user_prompt, conversation_thus_far):
+    if _is_empty(user_prompt):
+        raise ValueError("empty user prompt received")
+
     start_time = time.time()
     messages = [
         {"role": "system",
@@ -27,6 +30,10 @@ async def get_completion(user_prompt, conversation_thus_far):
     print(AI_COMPLETION_MODEL, "response:", completion)
 
     return completion
+
+
+def _is_empty(user_prompt: str):
+    not user_prompt or user_prompt.isspace()
 
 
 def _get_additional_initial_messages():

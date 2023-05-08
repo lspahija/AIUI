@@ -11,11 +11,11 @@ from app.util import delete_file
 
 LANGUAGE = os.getenv("LANGUAGE", "en")
 AUDIO_SPEED = os.getenv("AUDIO_SPEED", None)
-TTS_PROVIDER = os.getenv("TTS_PROVIDER", "STREAMELEMENTS")
+TTS_PROVIDER = os.getenv("TTS_PROVIDER", "EDGETTS")
 
 ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY", None)
 ELEVENLABS_VOICE = os.getenv("ELEVENLABS_VOICE", "EXAVITQu4vr4xnSDxMaL")
-EDGETTS_VOICE = os.getenv("EDGETTS_VOICE", "en-US-ChristopherNeural")
+EDGETTS_VOICE = os.getenv("EDGETTS_VOICE", "en-US-EricNeural")
 
 
 async def to_speech(text):
