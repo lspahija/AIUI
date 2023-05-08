@@ -35,4 +35,4 @@ We welcome contributions from the community! If you'd like to contribute, please
 - Submit pull requests for bug fixes or new features 
 
 Don't forget to ⭐️ the repo if you find it useful!
-It helps contributors gauge the popularity of the repo and determine how much time to allocate to development.
+This helps contributors gauge the popularity of the repo and determine how much time to allocate to development.
