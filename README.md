@@ -1,19 +1,19 @@
-# AIUI: A Natural Language Voice Interface for AI
+# VoxGPT: A Voice Interface for AI
 
 [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/XxIOWs?referralCode=VcOv5G)
 
 Point-and-click user interfaces will soon be a thing of the past. The main user interface of the near future will be entirely voice-based.
 
-AIUI is a platform that aims to enable seamless two-way verbal communication with AI models. It works in both desktop and mobile browsers and currently supports GPT-4 and GPT-3.5 models.
+VoxGPT is a platform that aims to enable seamless two-way verbal communication with AI models. It works in both desktop and mobile browsers and currently supports GPT-4 and GPT-3.5 models.
 
 ## Usage
-To interact with AIUI, simply start speaking after navigating to the [app](https://aiui.up.railway.app/) in your browser. AIUI will listen to your voice input, process it using an AI model, and provide a synthesized speech response. You can have a natural, continuous conversation with the AI by speaking and listening to its responses.
+To interact with VoxGPT, simply start speaking after navigating to the [app](https://voxgpt.up.railway.app/) in your browser. VoxGPT will listen to your voice input, process it using an AI model, and provide a synthesized speech response. You can have a natural, continuous conversation with the AI by speaking and listening to its responses.
 
 ## Run it Locally  
-1. `git clone git@github.com:lspahija/AIUI.git`
-2. `cd AIUI`
-3. `docker build -t aiui .`
-4. `docker run -d -e OPENAI_API_KEY='<YOUR_API_KEY>' TTS_PROVIDER='ELEVENLABS' ELEVENLABS_API_KEY='<YOUR_API_KEY>' -p 8000:80 aiui`
+1. `git clone git@github.com:lspahija/VoxGPT.git`
+2. `cd VoxGPT`
+3. `docker build -t voxgpt .`
+4. `docker run -d -e OPENAI_API_KEY='<YOUR_API_KEY>' TTS_PROVIDER='ELEVENLABS' ELEVENLABS_API_KEY='<YOUR_API_KEY>' -p 8000:80 voxgpt`
 5. navigate to `localhost:8000` in a modern browser
 
 The AI model defaults to `gpt-3.5-turbo` but you can adjust this by setting the `AI_COMPLETION_MODEL` environment variable (e.g. to `gpt-4` if your `OPENAI_API_KEY` has access to it)
