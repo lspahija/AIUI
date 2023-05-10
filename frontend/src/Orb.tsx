@@ -1,8 +1,14 @@
 import {useRef, useEffect} from 'react'
 
-function Orb() {
-    const sphereRad = 280
-    const radius_sp = 1
+function TextBox({onTextChange}: { onTextChange: (text: string) => void }) {
+    return <input type="text" onChange={e => onTextChange(e.target.value)}/>;
+}
+
+const Orb = () => {
+    let sphereRad = 280 // 20..500
+    const radius_sp = 1 // 1..2
+
+    const updateSphereRad = val => sphereRad = parseInt(val)
 
     const wait = 1
     let count = wait - 1
@@ -229,10 +235,15 @@ function Orb() {
         }
     }
 
-    return <Canvas draw={draw}/>
+    return (
+        <>
+            <TextBox onTextChange={updateSphereRad}/>
+            <Canvas draw={draw}/>
+        </>
+    )
 }
 
-const Canvas = (props) => {
+const Canvas = props => {
     const {draw, ...rest} = props;
     const canvasRef = useCanvas(draw);
 
