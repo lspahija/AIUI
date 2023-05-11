@@ -1,13 +1,9 @@
 import {useMicVAD, utils} from "@ricky0123/vad-react"
-import './App.css'
-import {useState} from 'react';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faMicrophone} from '@fortawesome/free-solid-svg-icons';
 
-const App = () => {
+const App = ({onUserSpeaking, onProcessing, onAISpeaking, reset}) => {
     let source: AudioBufferSourceNode
 
-    const vad = useMicVAD({
+    useMicVAD({
         preSpeechPadFrames: 5,
         positiveSpeechThreshold: 0.90,
         negativeSpeechThreshold: 0.75,
@@ -15,28 +11,23 @@ const App = () => {
         startOnLoad: true,
         onSpeechStart: async () => {
             console.log("speech started")
-            setSpeaking(true)
+            onUserSpeaking()
             if (source) source.stop(0)
         },
         onSpeechEnd: async audio => {
             console.log("speech ended")
-            setSpeaking(false)
             await processAudio(audio)
         },
         onVADMisfire: () => {
             console.log("vad misfire")
-            setSpeaking(false)
+            reset()
         }
     })
 
     const conversationThusFar = []
 
-    const [speaking, setSpeaking] = useState(false)
-    const [processingAudio, setProcessingAudio] = useState(false)
-    const [error, setError] = useState("")
-
     const processAudio = async audio => {
-        setProcessingAudio(true)
+        onProcessing()
 
         const wavBuffer = utils.encodeWAV(audio)
         const blob = new Blob([wavBuffer], {type: 'audio/wav'});
@@ -86,18 +77,14 @@ const App = () => {
         source = audioContext.createBufferSource()
         source.buffer = await audioContext.decodeAudioData(await blob.arrayBuffer())
         source.connect(audioContext.destination)
-        source.start(0);
+        source.start(0)
+        source.onended = reset
 
-        setProcessingAudio(false)
+        onAISpeaking()
     }
 
     const handleError = error => {
         console.log(`error encountered: ${error}`)
-
-        setProcessingAudio(false)
-
-        setError(`Error occurred: ${error}`)
-        setTimeout(() => setError(""), 2000)
     }
 
     const validate = async data => {
@@ -108,23 +95,7 @@ const App = () => {
         if (duration < minDuration) throw new Error(`Duration is ${duration}s, which is less than minimum of ${minDuration}s`)
     }
 
-    return (
-        <>
-            <div className={`card${speaking ? " speaking" : ""}`}>
-                {
-                    processingAudio || vad.loading
-                        ?
-                        <div className="spinner"></div>
-                        :
-                        <div className="icon-container">
-                            <FontAwesomeIcon className="speaker-icon" icon={faMicrophone}/>
-                        </div>
-                }
-                <div className="error-message">{error}</div>
-            </div>
-        </>
-    );
-
+    return null
 }
 
 export default App
