@@ -1,14 +1,41 @@
 import {useRef, useEffect} from 'react'
-
-function TextBox({onTextChange}: { onTextChange: (text: string) => void }) {
-    return <input type="text" onChange={e => onTextChange(e.target.value)}/>;
-}
+import App from "./App.tsx";
 
 const Orb = () => {
-    let sphereRad = 280 // 20..500
+    const sphereRad = 280 // 20..500
     const radius_sp = 1 // 1..2
+    let framesPerRotation = 5000
+    let r = 8, g = 127, b = 212 // particle color
+    const turnSpeed = () => 2 * Math.PI / framesPerRotation //the sphere will rotate at this speed (one complete rotation every 1600 frames).
 
-    const updateSphereRad = val => sphereRad = parseInt(val)
+    const onUserSpeaking = () => {
+        console.log("user speaking")
+        framesPerRotation = 5000
+        r = 10
+        g = 201
+        b = 42
+    }
+    const onProcessing = () => {
+        console.log("processing")
+        framesPerRotation = 1000
+        r = 52
+        g = 8
+        b = 212
+    }
+    const onAiSpeaking = () => {
+        console.log("ai speaking")
+        framesPerRotation = 5000
+        r = 201
+        g = 10
+        b = 144
+    }
+    const reset = () => {
+        console.log("reset")
+        framesPerRotation = 5000
+        r = 8
+        g = 127
+        b = 212
+    }
 
     const wait = 1
     let count = wait - 1
@@ -20,14 +47,12 @@ const Orb = () => {
         first: undefined
     }
     const particleAlpha = 1 // maximum alpha
-    const r = 70, g = 255, b = 140 // particle color
     const fLen = 320 // represents the distance from the viewer to z=0 depth.
     let m
 
     // we will not draw coordinates if they have too large of a z-coordinate (which means they are very close to the observer).
     const zMax = fLen - 2
     let turnAngle = 1 //initial angle
-    const turnSpeed = 2 * Math.PI / 5000 //the sphere will rotate at this speed (one complete rotation every 1600 frames).
     const sphereCenterY = 0, sphereCenterZ = -3 - sphereRad
     const particleRad = 2.5
 
@@ -37,7 +62,7 @@ const Orb = () => {
     //random acceleration factors - causes some random motion
     const randAccelX = 0.1, randAccelY = 0.1, randAccelZ = 0.1
     const gravity = -0 //try changing to a positive number (not too large, for example 0.3), or negative for floating upwards.
-    const rgbString = "rgba(" + r + "," + g + "," + b + "," //partial string for color which will be completed by appending alpha value.
+    const rgbString = () => "rgba(" + r + "," + g + "," + b + "," //partial string for color which will be completed by appending alpha value.
     //we are defining a lot of variables used in the screen update functions globally so that they don't have to be redefined every frame.
     let p
     let outsideTest
@@ -86,7 +111,7 @@ const Orb = () => {
         }
 
         //update viewing angle
-        turnAngle = (turnAngle + turnSpeed) % (2 * Math.PI)
+        turnAngle = (turnAngle + turnSpeed()) % (2 * Math.PI)
         sinAngle = Math.sin(turnAngle)
         cosAngle = Math.cos(turnAngle)
 
@@ -148,7 +173,7 @@ const Orb = () => {
                 //depth-dependent darkening
                 depthAlphaFactor = (1 - rotZ / zeroAlphaDepth)
                 depthAlphaFactor = (depthAlphaFactor > 1) ? 1 : ((depthAlphaFactor < 0) ? 0 : depthAlphaFactor)
-                context.fillStyle = rgbString + depthAlphaFactor * p.alpha + ")"
+                context.fillStyle = rgbString() + depthAlphaFactor * p.alpha + ")"
 
                 //draw
                 context.beginPath()
@@ -237,8 +262,8 @@ const Orb = () => {
 
     return (
         <>
-            <TextBox onTextChange={updateSphereRad}/>
             <Canvas draw={draw}/>
+            <App onUserSpeaking={onUserSpeaking} onProcessing={onProcessing} onAISpeaking={onAiSpeaking} reset={reset}/>
         </>
     )
 }
