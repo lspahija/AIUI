@@ -4,7 +4,7 @@ import {useState} from 'react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faMicrophone} from '@fortawesome/free-solid-svg-icons';
 
-function App() {
+const App = () => {
     let source: AudioBufferSourceNode
 
     const vad = useMicVAD({
