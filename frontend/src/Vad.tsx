@@ -6,10 +6,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 const Vad = ({onSpeechStart, onSpeechEnd, onMisfire, draw}) => {
     const [loading, setLoading] = useState(true)
 
-    const onLoadingChange = loading => {
-        console.log("onloading change called")
-        setLoading(loading)
-    }
+    const onLoadingChange = loading => setLoading(loading)
 
     useMicVADWrapper({
         preSpeechPadFrames: 5,
