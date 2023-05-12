@@ -1,30 +1,25 @@
-import {useMicVAD, utils} from "@ricky0123/vad-react"
+import {utils} from "@ricky0123/vad-react"
+import Vad from "./Vad.tsx";
 
-const App = ({onUserSpeaking, onProcessing, onAISpeaking, reset}) => {
+const SpeechManager = ({onUserSpeaking, onProcessing, onAISpeaking, reset, draw}) => {
     let source: AudioBufferSourceNode
-
-    useMicVAD({
-        preSpeechPadFrames: 5,
-        positiveSpeechThreshold: 0.90,
-        negativeSpeechThreshold: 0.75,
-        minSpeechFrames: 4,
-        startOnLoad: true,
-        onSpeechStart: async () => {
-            console.log("speech started")
-            onUserSpeaking()
-            if (source) source.stop(0)
-        },
-        onSpeechEnd: async audio => {
-            console.log("speech ended")
-            await processAudio(audio)
-        },
-        onVADMisfire: () => {
-            console.log("vad misfire")
-            reset()
-        }
-    })
-
     const conversationThusFar = []
+
+    const onSpeechStart = () => {
+        console.log("speech started")
+        onUserSpeaking()
+        if (source) source.stop(0)
+    }
+
+    const onSpeechEnd = async audio => {
+        console.log("speech ended")
+        await processAudio(audio)
+    }
+
+    const onMisfire = () => {
+        console.log("vad misfire")
+        reset()
+    }
 
     const processAudio = async audio => {
         onProcessing()
@@ -95,7 +90,7 @@ const App = ({onUserSpeaking, onProcessing, onAISpeaking, reset}) => {
         if (duration < minDuration) throw new Error(`Duration is ${duration}s, which is less than minimum of ${minDuration}s`)
     }
 
-    return null
+    return <Vad onSpeechStart={onSpeechStart} onSpeechEnd={onSpeechEnd} onMisfire={onMisfire} draw={draw}/>
 }
 
-export default App
+export default SpeechManager

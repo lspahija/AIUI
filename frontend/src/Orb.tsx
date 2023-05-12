@@ -1,7 +1,7 @@
-import {useRef, useEffect} from 'react'
-import App from "./App.tsx";
+import SpeechManager from "./SpeechManager.tsx";
 
 const Orb = () => {
+
     const sphereRad = 280 // 20..500
     const radius_sp = 1 // 1..2
     let framesPerRotation = 5000
@@ -260,50 +260,9 @@ const Orb = () => {
         }
     }
 
-    return (
-        <>
-            <Canvas draw={draw}/>
-            <App onUserSpeaking={onUserSpeaking} onProcessing={onProcessing} onAISpeaking={onAiSpeaking} reset={reset}/>
-        </>
-    )
-}
-
-const Canvas = props => {
-    const {draw, ...rest} = props;
-    const canvasRef = useCanvas(draw);
-
-    return <canvas ref={canvasRef} width={window.innerWidth} height={window.innerHeight} {...rest}/>
-}
-
-const useCanvas = draw => {
-
-    const canvasRef = useRef(null)
-
-    useEffect(() => {
-
-        const canvas = canvasRef.current
-        const context = canvas.getContext('2d')
-        const displayWidth = canvas.width
-        const displayHeight = canvas.height
-
-        // projection center coordinates sets location of origin
-        const projCenterX = displayWidth / 2
-        const projCenterY = displayHeight / 2
-
-        let animationFrameId
-
-        const render = () => {
-            draw(context, displayWidth, displayHeight, projCenterX, projCenterY)
-            animationFrameId = window.requestAnimationFrame(render)
-        }
-        render()
-
-        return () => {
-            window.cancelAnimationFrame(animationFrameId)
-        }
-    }, [draw])
-
-    return canvasRef
+    return <SpeechManager onUserSpeaking={onUserSpeaking} onProcessing={onProcessing}
+                          onAISpeaking={onAiSpeaking}
+                          reset={reset} draw={draw}/>
 }
 
 export default Orb
