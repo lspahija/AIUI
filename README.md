@@ -26,13 +26,3 @@ Output audio speed can be adjusted by setting the `AUDIO_SPEED` environment vari
 
 You can configure the language by setting the `LANGUAGE` environment variable to the corresponding ISO-639-1 code. The default is `en`.
 Languages other than English are currently only supported when using the `gTTS` or `edge_tts` providers for text-to-speech. The TTS provider can be selected by setting the environment variable `TTS_PROVIDER` to one of the values in [tts.py](./app/tts.py).
-
-## Contribution
-We welcome contributions from the community! If you'd like to contribute, please consider the following:
-
-- Report any issues you encounter
-- Suggest new features or improvements
-- Submit pull requests for bug fixes or new features 
-
-Don't forget to star the repo if you find it useful!
-This helps contributors gauge the popularity of the repo and determine how much time to allocate to development.
