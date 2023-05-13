@@ -68,9 +68,9 @@ const SpeechManager = ({onUserSpeaking, onProcessing, onAISpeaking, reset, draw}
     }
 
     const handleSuccess = async blob => {
-        if (source) source.stop(0)
-
         const audioContext = new (window.AudioContext || window.webkitAudioContext)()
+
+        if (source) source.stop(0)
         source = audioContext.createBufferSource()
         source.buffer = await audioContext.decodeAudioData(await blob.arrayBuffer())
         source.connect(audioContext.destination)
