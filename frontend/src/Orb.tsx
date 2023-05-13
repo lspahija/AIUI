@@ -30,7 +30,7 @@ const Orb = ({onSpeechStart, onSpeechEnd, onMisfire, draw}) => {
                 <ClipLoader
                     loading={loading}
                     cssOverride={{
-                        borderColor: "blue",
+                        borderColor: "#0A5DC3",
                     }}
                     size={150}
                     color={"#ffffff"}
