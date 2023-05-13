@@ -4,36 +4,45 @@ const App = () => {
     const sphereRad = 280 // 20..500
     const radius_sp = 1 // 1..2
     let framesPerRotation = 5000
-    let r = 8, g = 127, b = 212 // particle color
+    let r, g, b  // particle color
+
+    const setLightBlue = () => r = 8;
+    g = 127;
+    b = 212
+    const setGreen = () => r = 10;
+    g = 201;
+    b = 42
+    const setViolet = () => r = 52;
+    g = 8;
+    b = 212
+    const setFuchsia = () => r = 201;
+    g = 10;
+    b = 144
+
+    setLightBlue()
+
     const turnSpeed = () => 2 * Math.PI / framesPerRotation //the sphere will rotate at this speed (one complete rotation every 1600 frames).
+
 
     const onUserSpeaking = () => {
         console.log("user speaking")
         framesPerRotation = 5000
-        r = 10
-        g = 201
-        b = 42
+        setGreen()
     }
     const onProcessing = () => {
         console.log("processing")
         framesPerRotation = 1000
-        r = 52
-        g = 8
-        b = 212
+        setViolet()
     }
     const onAiSpeaking = () => {
         console.log("ai speaking")
         framesPerRotation = 5000
-        r = 201
-        g = 10
-        b = 144
+        setFuchsia()
     }
     const reset = () => {
         console.log("reset")
         framesPerRotation = 5000
-        r = 8
-        g = 127
-        b = 212
+        setLightBlue()
     }
 
     const wait = 1

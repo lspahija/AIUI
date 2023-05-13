@@ -17,22 +17,30 @@ const Orb = ({onSpeechStart, onSpeechEnd, onMisfire, draw}) => {
         onVADMisfire: () => onMisfire()
     }, loading => setLoading(loading))
 
-    return loading
-        ?
-        <ClipLoader
-            loading={loading}
-            cssOverride={{
-                display: "block",
-                margin: "0 auto",
-                borderColor: "red",
-            }}
-            size={150}
-            color={"#ffffff"}
-            aria-label="Loading Spinner"
-            data-testid="loader"
-        />
-        :
-        <Canvas draw={draw}/>
+    return (
+        loading
+            ?
+            <div style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "100vh", // Adjust this to the height you want
+                width: "100vw", // Adjust this to the width you want
+            }}>
+                <ClipLoader
+                    loading={loading}
+                    cssOverride={{
+                        borderColor: "blue",
+                    }}
+                    size={150}
+                    color={"#ffffff"}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                />
+            </div>
+            :
+            <Canvas draw={draw}/>
+    );
 }
 
 function useMicVADWrapper(options, onLoadingChange) {
