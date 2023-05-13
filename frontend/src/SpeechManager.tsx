@@ -1,5 +1,5 @@
 import {utils} from "@ricky0123/vad-react"
-import Vad from "./Vad.tsx";
+import Orb from "./Orb.tsx";
 
 const SpeechManager = ({onUserSpeaking, onProcessing, onAISpeaking, reset, draw}) => {
     let source: AudioBufferSourceNode
@@ -90,7 +90,7 @@ const SpeechManager = ({onUserSpeaking, onProcessing, onAISpeaking, reset, draw}
         if (duration < minDuration) throw new Error(`Duration is ${duration}s, which is less than minimum of ${minDuration}s`)
     }
 
-    return <Vad onSpeechStart={onSpeechStart} onSpeechEnd={onSpeechEnd} onMisfire={onMisfire} draw={draw}/>
+    return <Orb onSpeechStart={onSpeechStart} onSpeechEnd={onSpeechEnd} onMisfire={onMisfire} draw={draw}/>
 }
 
 export default SpeechManager
