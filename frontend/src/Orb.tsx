@@ -1,7 +1,7 @@
 import {useMicVAD} from "@ricky0123/vad-react";
 import {useEffect, useRef, useState} from "react";
 import Canvas from "./Canvas.tsx";
-import ClipLoader from "react-spinners/ClipLoader";
+import RotateLoader from "react-spinners/RotateLoader";
 
 const Orb = ({onSpeechStart, onSpeechEnd, onMisfire, draw}) => {
     const [loading, setLoading] = useState(true)
@@ -24,16 +24,12 @@ const Orb = ({onSpeechStart, onSpeechEnd, onMisfire, draw}) => {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                height: "100vh", // Adjust this to the height you want
-                width: "100vw", // Adjust this to the width you want
+                height: "100vh",
+                width: "100vw",
             }}>
-                <ClipLoader
+                <RotateLoader
                     loading={loading}
-                    cssOverride={{
-                        borderColor: "#0A5DC3",
-                    }}
-                    size={150}
-                    color={"#ffffff"}
+                    color={"#27eab6"}
                     aria-label="Loading Spinner"
                     data-testid="loader"
                 />
