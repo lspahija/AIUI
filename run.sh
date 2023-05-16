@@ -8,7 +8,15 @@ if [ "$(docker ps -a -q -f "label=$CONTAINER_LABEL")" ]; then
     docker rm -f $(docker ps -a -q -f "label=$CONTAINER_LABEL")
 fi
 
-docker build -t aiui .
+# Detect the architecture
+ARCH=$(uname -m)
+if [ "$ARCH" == "arm64" ]; then
+    # Use docker buildx for arm64
+    docker buildx build --platform linux/arm64 -t aiui .
+else
+    # Use regular docker build for other architectures
+    docker build -t aiui .
+fi
 
 if [ "$1" == "gTTS" ]; then
     docker run -d -e OPENAI_API_KEY="${OPENAI_API_KEY}" -e TTS_PROVIDER="gTTS" -p 8000:80 --label "$CONTAINER_LABEL" aiui
