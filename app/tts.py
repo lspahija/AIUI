@@ -6,6 +6,7 @@ import requests
 from gtts import gTTS
 from pydub import AudioSegment
 import edge_tts
+from elevenlabs import generate, save
 
 from app.util import delete_file
 
@@ -60,18 +61,15 @@ def _gtts_to_speech(text):
 def _elevenlabs_to_speech(text):
     start_time = time.time()
 
-    response = requests.post(
-        url=f"https://api.elevenlabs.io/v1/text-to-speech/{ELEVENLABS_VOICE}",
-        headers={
-            "Content-Type": "application/json",
-            "xi-api-key": ELEVENLABS_API_KEY,
-        },
-        json={"text": text}
+    audio = generate(
+        api_key=ELEVENLABS_API_KEY,
+        text=text,
+        voice=ELEVENLABS_VOICE,
+        model="eleven_monolingual_v1"
     )
 
     filepath = f"/tmp/{uuid.uuid4()}.mp3"
-    with open(filepath, "wb") as f:
-        f.write(response.content)
+    save(audio, filepath)
 
     speed_adjusted_filepath = _adjust_audio_speed(filepath)
 
