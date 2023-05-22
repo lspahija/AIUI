@@ -10,7 +10,6 @@ from fastapi.staticfiles import StaticFiles
 from app.ai import get_completion
 from app.stt import transcribe
 from app.tts import to_speech
-from app.util import delete_file
 
 app = FastAPI()
 
@@ -21,16 +20,13 @@ async def infer(audio: UploadFile, background_tasks: BackgroundTasks,
     print("received request")
     start_time = time.time()
 
-    user_prompt = await transcribe(audio)
-    ai_response = await get_completion(user_prompt, conversation)
-
-    output_audio_filepath = await to_speech(ai_response)
-    background_tasks.add_task(delete_file, output_audio_filepath)
+    user_prompt_text = await transcribe(audio)
+    ai_response_text = await get_completion(user_prompt_text, conversation)
+    ai_response_audio_filepath = await to_speech(ai_response_text, background_tasks)
 
     print('total processing time:', time.time() - start_time, 'seconds')
-
-    return FileResponse(path=output_audio_filepath, media_type="audio/mpeg",
-                        headers={"text": _construct_response_header(user_prompt, ai_response)})
+    return FileResponse(path=ai_response_audio_filepath, media_type="audio/mpeg",
+                        headers={"text": _construct_response_header(user_prompt_text, ai_response_text)})
 
 
 @app.get("/")
