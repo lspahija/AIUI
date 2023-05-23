@@ -8,6 +8,7 @@ import openai
 
 AI_COMPLETION_MODEL = os.getenv("AI_COMPLETION_MODEL", "gpt-3.5-turbo")
 LANGUAGE = os.getenv("LANGUAGE", "en")
+INITIAL_PROMPT = f"You are AIUI - a helpful assistant with a voice interface. Keep your responses very succinct and limited to a single sentence since the user is interacting with you through a voice interface. Always provide your responses in the language that corresponds to the ISO-639-1 code: {LANGUAGE}."
 
 
 async def get_completion(user_prompt, conversation_thus_far):
@@ -16,8 +17,10 @@ async def get_completion(user_prompt, conversation_thus_far):
 
     start_time = time.time()
     messages = [
-        {"role": "system",
-         "content": f"You are a helpful assistant with a voice interface. Keep your responses succinct since the user is interacting with you through a voice interface. Your responses should be a few sentences at most. Always provide your responses in the language that corresponds to the ISO-639-1 code: {LANGUAGE}."}
+        {
+            "role": "system",
+            "content": INITIAL_PROMPT
+        }
     ]
     messages.extend(_get_additional_initial_messages())
     messages.extend(json.loads(base64.b64decode(conversation_thus_far)))
@@ -40,7 +43,11 @@ def _is_empty(user_prompt: str):
 def _get_additional_initial_messages():
     match AI_COMPLETION_MODEL:
         case "gpt-3.5-turbo":
-            return [{"role": "user",
-                     "content": f"Make sure you always strictly provide your responses in the language that corresponds to the ISO-639-1 code: {LANGUAGE}."}]
+            return [
+                {
+                    "role": "user",
+                    "content": INITIAL_PROMPT
+                }
+            ]
         case _:
             return []
