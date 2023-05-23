@@ -11,10 +11,10 @@ const App = () => {
         g = 235
         b = 222
     }
-    const setBrightBlue = () => {
-        r = 88
-        g = 110
-        b = 252
+    const setOrange = () => {
+        r = 255
+        g = 191
+        b = 0
     }
     const setViolet = () => {
         r = 235
@@ -34,7 +34,7 @@ const App = () => {
     const onUserSpeaking = () => {
         console.log("user speaking")
         framesPerRotation = 5000
-        setBrightBlue()
+        setOrange()
     }
     const onProcessing = () => {
         console.log("processing")
