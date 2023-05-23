@@ -1,3 +1,4 @@
+import logging
 import os
 import time
 import uuid
@@ -42,7 +43,7 @@ async def _edge_tts_to_speech(text, background_tasks):
     speed_adjusted_filepath = _adjust_audio_speed(filepath)
     background_tasks.add_task(delete_file, speed_adjusted_filepath)
 
-    print('TTS time:', time.time() - start_time, 'seconds')
+    logging.info('TTS time: %s %s', time.time() - start_time, 'seconds')
     return speed_adjusted_filepath
 
 
@@ -56,7 +57,7 @@ def _gtts_to_speech(text, background_tasks):
     speed_adjusted_filepath = _adjust_audio_speed(filepath)
     background_tasks.add_task(delete_file, speed_adjusted_filepath)
 
-    print('TTS time:', time.time() - start_time, 'seconds')
+    logging.info('TTS time: %s %s', time.time() - start_time, 'seconds')
     return speed_adjusted_filepath
 
 
@@ -76,7 +77,7 @@ def _elevenlabs_to_speech(text, background_tasks):
     speed_adjusted_filepath = _adjust_audio_speed(filepath)
     background_tasks.add_task(delete_file, speed_adjusted_filepath)
 
-    print('TTS time:', time.time() - start_time, 'seconds')
+    logging.info('TTS time: %s %s', time.time() - start_time, 'seconds')
     return speed_adjusted_filepath
 
 
@@ -92,7 +93,7 @@ def _streamelements_to_speech(text, background_tasks):
     speed_adjusted_filepath = _adjust_audio_speed(filepath)
     background_tasks.add_task(delete_file, speed_adjusted_filepath)
 
-    print('TTS time:', time.time() - start_time, 'seconds')
+    logging.info('TTS time: %s %s', time.time() - start_time, 'seconds')
     return speed_adjusted_filepath
 
 

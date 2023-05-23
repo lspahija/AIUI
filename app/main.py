@@ -1,6 +1,7 @@
 import base64
 import json
 import time
+import logging
 
 from fastapi import FastAPI, UploadFile, BackgroundTasks, Header
 from fastapi.responses import FileResponse
@@ -12,19 +13,20 @@ from app.stt import transcribe
 from app.tts import to_speech
 
 app = FastAPI()
+logging.basicConfig(level=logging.INFO)
 
 
 @app.post("/inference")
 async def infer(audio: UploadFile, background_tasks: BackgroundTasks,
                 conversation: str = Header(default=None)) -> FileResponse:
-    print("received request")
+    logging.debug("received request")
     start_time = time.time()
 
     user_prompt_text = await transcribe(audio)
     ai_response_text = await get_completion(user_prompt_text, conversation)
     ai_response_audio_filepath = await to_speech(ai_response_text, background_tasks)
 
-    print('total processing time:', time.time() - start_time, 'seconds')
+    logging.info('total processing time: %s %s', time.time() - start_time, 'seconds')
     return FileResponse(path=ai_response_audio_filepath, media_type="audio/mpeg",
                         headers={"text": _construct_response_header(user_prompt_text, ai_response_text)})
 

@@ -1,5 +1,6 @@
 import base64
 import json
+import logging
 import os
 import time
 
@@ -22,12 +23,12 @@ async def get_completion(user_prompt, conversation_thus_far):
     messages.extend(json.loads(base64.b64decode(conversation_thus_far)))
     messages.append({"role": "user", "content": user_prompt})
 
-    print("calling", AI_COMPLETION_MODEL)
+    logging.debug("calling %s", AI_COMPLETION_MODEL)
     res = await openai.ChatCompletion.acreate(model=AI_COMPLETION_MODEL, messages=messages, timeout=15)
-    print("response received from", AI_COMPLETION_MODEL, "in", time.time() - start_time, "seconds")
+    logging.info("response received from %s %s %s %s", AI_COMPLETION_MODEL, "in", time.time() - start_time, "seconds")
 
     completion = res['choices'][0]['message']['content']
-    print(AI_COMPLETION_MODEL, "response:", completion)
+    logging.info('%s %s %s', AI_COMPLETION_MODEL, "response:", completion)
 
     return completion
 

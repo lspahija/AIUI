@@ -1,3 +1,4 @@
+import logging
 import os
 import shutil
 import time
@@ -20,23 +21,23 @@ async def transcribe(audio):
 
     converted_filepath = f"/tmp/ffmpeg-{uuid.uuid4()}{audio.filename}"
 
-    print("running through ffmpeg")
+    logging.debug("running through ffmpeg")
     (
         ffmpeg
         .input(initial_filepath)
         .output(converted_filepath, loglevel="error")
         .run()
     )
-    print("ffmpeg done")
+    logging.debug("ffmpeg done")
 
     delete_file(initial_filepath)
 
     read_file = open(converted_filepath, "rb")
 
-    print("calling whisper")
+    logging.debug("calling whisper")
     transcription = (await openai.Audio.atranscribe("whisper-1", read_file, language=LANGUAGE))["text"]
-    print("STT response received from whisper in", time.time() - start_time, 'seconds')
-    print('user prompt:', transcription)
+    logging.info("STT response received from whisper in %s %s", time.time() - start_time, 'seconds')
+    logging.info('user prompt: %s', transcription)
 
     delete_file(converted_filepath)
 
