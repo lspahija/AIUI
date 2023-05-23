@@ -33,7 +33,7 @@ async def get_completion(user_prompt, conversation_thus_far):
 
 
 def _is_empty(user_prompt: str):
-    not user_prompt or user_prompt.isspace()
+    return not user_prompt or user_prompt.isspace()
 
 
 def _get_additional_initial_messages():

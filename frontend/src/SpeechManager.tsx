@@ -54,7 +54,11 @@ const SpeechManager = ({onUserSpeaking, onProcessing, onAISpeaking, reset, draw}
     }
 
     const handleResponse = res => {
-        if (!res.ok) return Promise.reject(res)
+        if (!res.ok) {
+            return res.text().then(error => {
+                throw new Error(error);
+            });
+        }
 
         const newMessages = JSON.parse(base64Decode(res.headers.get("text")))
         conversationThusFar.push(...newMessages)
@@ -81,7 +85,8 @@ const SpeechManager = ({onUserSpeaking, onProcessing, onAISpeaking, reset, draw}
     }
 
     const handleError = error => {
-        console.log(`error encountered: ${error}`)
+        console.log(`error encountered: ${error.message}`)
+        reset()
     }
 
     const validate = async data => {
