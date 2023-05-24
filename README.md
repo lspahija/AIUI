@@ -12,7 +12,7 @@ To interact with AIUI, simply start speaking after navigating to the [app](https
 ## Run it Locally  
 1. `git clone git@github.com:lspahija/AIUI.git`
 2. `cd AIUI`
-3. `docker build -t aiui .`
+3. `docker build -t aiui .` or `docker buildx build --platform linux/arm64 -t aiui .` if on arm64 architecture
 4. `docker run -d -e OPENAI_API_KEY='<YOUR_API_KEY>' TTS_PROVIDER='ELEVENLABS' ELEVENLABS_API_KEY='<YOUR_API_KEY>' -p 8000:80 aiui`
 5. navigate to `localhost:8000` in a modern browser
 
