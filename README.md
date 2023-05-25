@@ -1,4 +1,6 @@
-# AIUI: A Voice Interface for AI
+![Blue and Navy Modern Brain Illustration AI Company Logo (1)](https://github.com/lspahija/AIUI/assets/44912218/5eaeb8fe-3e67-4c98-b858-9633810ed8aa)
+
+# A Voice Interface for AI
 
 Point-and-click user interfaces will soon be a thing of the past. The main user interface of the near future will be entirely voice-based.
 
