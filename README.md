@@ -27,7 +27,7 @@ cd AIUI
 ```bash
 docker build -t aiui .
 ``` 
-or if on arm64 architecture: 
+or if on arm64 architecture (including Apple Silicon): 
 ```bash
 docker buildx build --platform linux/arm64 -t aiui .
 ```
