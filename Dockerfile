@@ -20,13 +20,13 @@ FROM tiangolo/uvicorn-gunicorn-fastapi:python3.10-slim
 
 WORKDIR /
 
-ENV MAX_WORKERS=5
-
 COPY ./requirements.txt /app/requirements.txt
+
+RUN apt-get update && apt-get install -y build-essential ffmpeg
 
 RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
 
-RUN apt-get update && apt-get install -y ffmpeg
+ENV MAX_WORKERS=1 TIMEOUT=1200
 
 COPY ./app /app
 
