@@ -4,6 +4,8 @@ Point-and-click user interfaces will soon be a thing of the past. The main user 
 
 AIUI is a platform that aims to enable seamless two-way verbal communication with AI models. It works in both desktop and mobile browsers and currently supports GPT-4 and GPT-3.5 models.
 
+https://github.com/lspahija/AIUI/assets/44912218/0eef12fe-6042-4614-86b8-427daa47ab46
+
 ## Usage
 To interact with AIUI, simply start speaking after navigating to the [app](https://aiui.up.railway.app/) in your browser. AIUI will listen to your voice input, process it using an AI model, and provide a synthesized speech response. You can have a natural, continuous conversation with the AI by speaking and listening to its responses.
 
@@ -15,10 +17,6 @@ To interact with AIUI, simply start speaking after navigating to the [app](https
 5. navigate to `localhost:8000` in a modern browser
 
 The AI model defaults to `gpt-3.5-turbo` but you can adjust this by setting the `AI_COMPLETION_MODEL` environment variable (e.g. to `gpt-4` if your `OPENAI_API_KEY` has access to it)
-
-(this video is currently out of date)
-
-https://user-images.githubusercontent.com/44912218/227669605-1508a9d4-34ce-455c-a913-f0c9530a9e73.mp4
 
 Output audio speed can be adjusted by setting the `AUDIO_SPEED` environment variable e.g. setting this to 1.5 will result in audio playing back at 1.5x default speed.
 
