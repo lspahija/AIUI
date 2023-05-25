@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/lspahija/AIUI/assets/44912218/4311a52a-9ec5-4184-9c11-7ce920552983" alt="AIUI">
+  <img src="https://github.com/lspahija/AIUI/assets/44912218/4a8537fc-8438-4f27-bdfb-32d4418fb06b" alt="AIUI">
 </p>
 
 # A Voice Interface for AI
