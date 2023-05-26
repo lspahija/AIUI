@@ -9,7 +9,7 @@ Point-and-click user interfaces will soon be a thing of the past. The main user 
 AIUI is a platform that aims to enable seamless two-way verbal communication with AI models. It works in both desktop and mobile browsers and currently supports GPT-4 and GPT-3.5 models, with support for open models planned.
 
 ## Demo Video
-https://github.com/lspahija/AIUI/assets/44912218/e45d375f-7e4e-4e77-b53e-863de1405cf6
+https://github.com/lspahija/AIUI/assets/44912218/bf96e515-b4d7-4a67-ac77-b585b8cc45df
 
 ## Usage
 To interact with AIUI, simply start speaking after navigating to the [app](https://aiui.up.railway.app/) in your browser. AIUI will listen to your voice input, process it using an AI model, and provide a synthesized speech response. You can have a natural, continuous conversation with the AI by speaking and listening to its responses.
