@@ -6,7 +6,7 @@
 
 Point-and-click user interfaces will soon be a thing of the past. The main user interface of the near future will be entirely voice-based.
 
-AIUI is a platform that aims to enable seamless two-way verbal communication with AI models. It works in both desktop and mobile browsers and currently supports GPT-4 and GPT-3.5 models.
+AIUI is a platform that aims to enable seamless two-way verbal communication with AI models. It works in both desktop and mobile browsers and currently supports GPT-4 and GPT-3.5 models, with support for open models planned.
 
 ## Demo Video
 https://github.com/lspahija/AIUI/assets/44912218/0eef12fe-6042-4614-86b8-427daa47ab46
