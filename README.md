@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/lspahija/AIUI/assets/44912218/5eaeb8fe-3e67-4c98-b858-9633810ed8aa" alt="Blue and Navy Modern Brain Illustration AI Company Logo">
+  <img src="https://github.com/lspahija/AIUI/assets/44912218/4a8537fc-8438-4f27-bdfb-32d4418fb06b" alt="AIUI">
 </p>
 
 # A Voice Interface for AI
