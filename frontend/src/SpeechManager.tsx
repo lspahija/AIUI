@@ -3,12 +3,16 @@ import Orb from "./Orb.tsx";
 
 const SpeechManager = ({onUserSpeaking, onProcessing, onAISpeaking, reset, draw}) => {
     let source: AudioBufferSourceNode
+    let sourceIsStarted = false
     const conversationThusFar = []
 
     const onSpeechStart = () => {
         console.log("speech started")
         onUserSpeaking()
-        if (source) source.stop(0)
+        if (source && sourceIsStarted) {
+            source.stop(0)
+            sourceIsStarted = false
+        }
     }
 
     const onSpeechEnd = async audio => {
@@ -74,11 +78,15 @@ const SpeechManager = ({onUserSpeaking, onProcessing, onAISpeaking, reset, draw}
     const handleSuccess = async blob => {
         const audioContext = new (window.AudioContext || window.webkitAudioContext)()
 
-        if (source) source.stop(0)
+        if (source && sourceIsStarted) {
+            source.stop(0)
+            sourceIsStarted = false
+        }
         source = audioContext.createBufferSource()
         source.buffer = await audioContext.decodeAudioData(await blob.arrayBuffer())
         source.connect(audioContext.destination)
         source.start(0)
+        sourceIsStarted = true
         source.onended = reset
 
         onAISpeaking()
