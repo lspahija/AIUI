@@ -3,6 +3,7 @@ import json
 import logging
 import os
 import time
+import requests
 
 import openai
 
@@ -34,6 +35,21 @@ async def get_completion(user_prompt, conversation_thus_far):
     logging.info('%s %s %s', AI_COMPLETION_MODEL, "response:", completion)
 
     return completion
+
+
+async def get_local_completion(user_prompt):
+    logging.info("calling the local model")
+
+    data = {
+        "message": f'### Instruction: {INITIAL_PROMPT} ### User: {user_prompt} ### Response:'
+    }
+
+    start_time = time.time()
+    response = requests.post('http://host.docker.internal:8001/test', json=data)
+    logging.info("response received from %s %s %s %s", "LOCAL_AI_MODEL", "in", time.time() - start_time, "seconds")
+
+    logging.info("done calling the local model")
+    return response.text
 
 
 def _is_empty(user_prompt: str):

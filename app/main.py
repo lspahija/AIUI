@@ -8,7 +8,7 @@ from fastapi.responses import FileResponse
 from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
-from app.ai import get_completion
+from app.ai import get_completion, get_local_completion
 from app.stt import transcribe
 from app.tts import to_speech
 
@@ -23,7 +23,7 @@ async def infer(audio: UploadFile, background_tasks: BackgroundTasks,
     start_time = time.time()
 
     user_prompt_text = await transcribe(audio)
-    ai_response_text = await get_completion(user_prompt_text, conversation)
+    ai_response_text = await get_local_completion(user_prompt_text)
     ai_response_audio_filepath = await to_speech(ai_response_text, background_tasks)
 
     logging.info('total processing time: %s %s', time.time() - start_time, 'seconds')
