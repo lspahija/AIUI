@@ -48,4 +48,9 @@ Languages other than English are currently only supported when using the `gTTS` 
 
 <br/>
 
+## One Click Deployment
 [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/XxIOWs?referralCode=VcOv5G)
+
+
+## Find this useful?
+Please star this repository! It helps contributors gauge the popularity of the repo and determine how much time to allot to development.
