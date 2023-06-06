@@ -33,7 +33,7 @@ docker buildx build --platform linux/arm64 -t aiui .
 ```
 4. Create Docker container from image
 ```bash
-docker run -d -e OPENAI_API_KEY='<YOUR_API_KEY>' -e TTS_PROVIDER='ELEVENLABS' -e ELEVENLABS_API_KEY='<YOUR_API_KEY>' -p 8000:80 aiui
+docker run -d -e OPENAI_API_KEY=<YOUR_API_KEY> -e TTS_PROVIDER=ELEVENLABS -e ELEVENLABS_API_KEY=<YOUR_API_KEY> -p 8000:80 aiui
 ```
 5. Navigate to `localhost:8000` in a modern browser
 
