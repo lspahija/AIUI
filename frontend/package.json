@@ -30,6 +30,6 @@
     "http-server": "^14.1.1",
     "nodemon": "^2.0.22",
     "typescript": "^5.0.2",
-    "vite": "^4.3.2"
+    "vite": "^4.3.9"
   }
 }
