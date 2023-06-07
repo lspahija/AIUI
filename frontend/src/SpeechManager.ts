@@ -47,11 +47,11 @@ const processAudio = async audio => {
 function base64Encode(str: string) {
     const encoder = new TextEncoder()
     const data = encoder.encode(str)
-    return btoa(String.fromCharCode(...new Uint8Array(data)))
+    return window.btoa(String.fromCharCode(...new Uint8Array(data)))
 }
 
 function base64Decode(base64: string) {
-    const binaryStr = atob(base64)
+    const binaryStr = window.atob(base64)
     const bytes = new Uint8Array([...binaryStr].map((char) => char.charCodeAt(0)))
     return new TextDecoder().decode(bytes)
 }
