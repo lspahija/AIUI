@@ -1,12 +1,11 @@
-import {useCanvas} from "./hooks/useCanvas";
 import {useMicVADWrapper} from "./hooks/useMicVADWrapper";
 import RotateLoader from "react-spinners/RotateLoader";
 import {VAD_OPTIONS} from "./constants";
 import {particleActions} from "./ParticleManager.ts";
 import {useState} from "react";
+import Canvas from "./Canvas.tsx";
 
 const App = () => {
-    const canvasRef = useCanvas(particleActions.draw);
     const [loading, setLoading] = useState(true);
 
     useMicVADWrapper(VAD_OPTIONS, setLoading);
@@ -30,7 +29,7 @@ const App = () => {
         );
     }
 
-    return <canvas ref={canvasRef} width={window.innerWidth} height={window.innerHeight}/>;
+    return <Canvas draw={particleActions.draw}/>
 }
 
 export default App;
