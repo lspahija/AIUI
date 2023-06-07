@@ -1,7 +1,7 @@
 import {useMicVADWrapper} from "./hooks/useMicVADWrapper";
 import RotateLoader from "react-spinners/RotateLoader";
 import {VAD_OPTIONS} from "./constants";
-import {particleActions} from "./ParticleManager.ts";
+import {particleActions} from "./particle-manager.ts";
 import {useState} from "react";
 import Canvas from "./Canvas.tsx";
 

@@ -1,4 +1,4 @@
-import {onMisfire, onSpeechEnd, onSpeechStart} from "./SpeechManager.ts";
+import {onMisfire, onSpeechEnd, onSpeechStart} from "./speech-manager.ts";
 
 export const VAD_OPTIONS = {
     preSpeechPadFrames: 5,
@@ -8,5 +8,5 @@ export const VAD_OPTIONS = {
     startOnLoad: true,
     onSpeechStart,
     onSpeechEnd,
-    onVADMisfire: onMisfire
+    onMisfire
 }
