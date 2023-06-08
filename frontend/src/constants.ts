@@ -8,5 +8,5 @@ export const VAD_OPTIONS = {
     startOnLoad: true,
     onSpeechStart,
     onSpeechEnd,
-    onMisfire
+    onVADMisfire: onMisfire
 }
