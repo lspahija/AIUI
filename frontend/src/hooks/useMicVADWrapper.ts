@@ -15,8 +15,8 @@ export const useMicVADWrapper = (onLoadingChange) => {
             onVADMisfire: onMisfire
         }
     );
-    const loadingRef = useRef(micVAD.loading);
 
+    const loadingRef = useRef(micVAD.loading);
     useEffect(() => {
         if (loadingRef.current !== micVAD.loading) {
             onLoadingChange(micVAD.loading);
