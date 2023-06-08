@@ -1,6 +1,5 @@
 import {useMicVADWrapper} from "./hooks/useMicVADWrapper";
 import RotateLoader from "react-spinners/RotateLoader";
-import {VAD_OPTIONS} from "./constants";
 import {particleActions} from "./particle-manager.ts";
 import {useState} from "react";
 import Canvas from "./Canvas.tsx";
@@ -8,7 +7,7 @@ import Canvas from "./Canvas.tsx";
 const App = () => {
     const [loading, setLoading] = useState(true);
 
-    useMicVADWrapper(VAD_OPTIONS, setLoading);
+    useMicVADWrapper(setLoading);
 
     if (loading) {
         return (

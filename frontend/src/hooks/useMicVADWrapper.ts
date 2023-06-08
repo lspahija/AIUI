@@ -1,8 +1,9 @@
 import {useEffect, useRef} from "react";
 import {useMicVAD} from "@ricky0123/vad-react";
+import {VAD_OPTIONS} from "../constants.ts";
 
-export const useMicVADWrapper = (options, onLoadingChange) => {
-    const micVAD = useMicVAD(options);
+export const useMicVADWrapper = (onLoadingChange) => {
+    const micVAD = useMicVAD(VAD_OPTIONS);
     const loadingRef = useRef(micVAD.loading);
 
     useEffect(() => {
