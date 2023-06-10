@@ -9,7 +9,7 @@ from pydub import AudioSegment
 import edge_tts
 from elevenlabs import generate, save
 
-from app.util import delete_file
+from util import delete_file
 
 LANGUAGE = os.getenv("LANGUAGE", "en")
 AUDIO_SPEED = os.getenv("AUDIO_SPEED", None)

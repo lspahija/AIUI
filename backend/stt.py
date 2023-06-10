@@ -7,7 +7,7 @@ import uuid
 import ffmpeg
 import openai
 
-from app.util import delete_file
+from util import delete_file
 
 LANGUAGE = os.getenv("LANGUAGE", "en")
 

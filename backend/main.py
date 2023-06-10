@@ -8,9 +8,9 @@ from fastapi.responses import FileResponse
 from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
-from app.ai import get_completion
-from app.stt import transcribe
-from app.tts import to_speech
+from ai import get_completion
+from stt import transcribe
+from tts import to_speech
 
 app = FastAPI()
 logging.basicConfig(level=logging.INFO)
