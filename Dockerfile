@@ -18,8 +18,10 @@ ENV MAX_WORKERS=5
 
 RUN apt-get update && apt-get install -y ffmpeg
 
-COPY ./backend /app
+COPY ./backend/requirements.txt /tmp/
 
-RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
+RUN pip install --no-cache-dir --upgrade -r /tmp/requirements.txt
+
+COPY ./backend /app
 
 COPY --from=frontend_builder /frontend/dist /app/frontend/dist
