@@ -12,7 +12,7 @@ AIUI is a platform that aims to enable seamless two-way verbal communication wit
 https://github.com/lspahija/AIUI/assets/44912218/0c984aed-9785-4dd1-983a-198414e5b573
 
 ## Usage
-To interact with AIUI, simply start speaking after navigating to the [app](https://aiui.up.railway.app/) in your browser. AIUI will listen to your voice input, process it using an AI model, and provide a synthesized speech response. You can have a natural, continuous conversation with the AI by speaking and listening to its responses.
+To interact with AIUI, simply start speaking after navigating to the app in your browser. AIUI will listen to your voice input, process it using an AI model, and provide a synthesized speech response. You can have a natural, continuous conversation with the AI by speaking and listening to its responses.
 
 ## Run it Locally  
 1. Clone the repo
