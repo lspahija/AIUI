@@ -1,11 +1,11 @@
-openai~=0.27.7
-fastapi~=0.95.2
+openai~=0.28.0
+fastapi~=0.103.1
 gTTS~=2.3.2
 python-multipart~=0.0.6
 ffmpeg-python~=0.2.0
-pydantic~=1.10.7
-uvicorn~=0.22.0
+pydantic~=2.3.0
+uvicorn~=0.23.2
 pydub~=0.25.1
 requests~=2.31.0
-edge-tts~=6.1.5
-elevenlabs~=0.2.15
+edge-tts~=6.1.8
+elevenlabs~=0.2.26

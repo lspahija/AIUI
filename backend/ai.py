@@ -22,7 +22,7 @@ async def get_completion(user_prompt, conversation_thus_far):
             "content": INITIAL_PROMPT
         }
     ]
-    messages.extend(_get_additional_initial_messages())
+
     messages.extend(json.loads(base64.b64decode(conversation_thus_far)))
     messages.append({"role": "user", "content": user_prompt})
 
@@ -38,16 +38,3 @@ async def get_completion(user_prompt, conversation_thus_far):
 
 def _is_empty(user_prompt: str):
     return not user_prompt or user_prompt.isspace()
-
-
-def _get_additional_initial_messages():
-    match AI_COMPLETION_MODEL:
-        case "gpt-3.5-turbo":
-            return [
-                {
-                    "role": "user",
-                    "content": INITIAL_PROMPT
-                }
-            ]
-        case _:
-            return []
