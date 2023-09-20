@@ -5,14 +5,12 @@ import uuid
 
 import requests
 from gtts import gTTS
-from pydub import AudioSegment
 import edge_tts
 from elevenlabs import generate, save
 
 from util import delete_file
 
 LANGUAGE = os.getenv("LANGUAGE", "en")
-AUDIO_SPEED = os.getenv("AUDIO_SPEED", None)
 TTS_PROVIDER = os.getenv("TTS_PROVIDER", "EDGETTS")
 
 ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY", None)
@@ -40,11 +38,10 @@ async def _edge_tts_to_speech(text, background_tasks):
     filepath = f"/tmp/{uuid.uuid4()}.mp3"
     await communicate.save(filepath)
 
-    speed_adjusted_filepath = _adjust_audio_speed(filepath)
-    background_tasks.add_task(delete_file, speed_adjusted_filepath)
+    background_tasks.add_task(delete_file, filepath)
 
     logging.info('TTS time: %s %s', time.time() - start_time, 'seconds')
-    return speed_adjusted_filepath
+    return filepath
 
 
 def _gtts_to_speech(text, background_tasks):
@@ -54,11 +51,10 @@ def _gtts_to_speech(text, background_tasks):
     filepath = f"/tmp/{uuid.uuid4()}.mp3"
     tts.save(filepath)
 
-    speed_adjusted_filepath = _adjust_audio_speed(filepath)
-    background_tasks.add_task(delete_file, speed_adjusted_filepath)
+    background_tasks.add_task(delete_file, filepath)
 
     logging.info('TTS time: %s %s', time.time() - start_time, 'seconds')
-    return speed_adjusted_filepath
+    return filepath
 
 
 def _elevenlabs_to_speech(text, background_tasks):
@@ -74,11 +70,10 @@ def _elevenlabs_to_speech(text, background_tasks):
     filepath = f"/tmp/{uuid.uuid4()}.mp3"
     save(audio, filepath)
 
-    speed_adjusted_filepath = _adjust_audio_speed(filepath)
-    background_tasks.add_task(delete_file, speed_adjusted_filepath)
+    background_tasks.add_task(delete_file, filepath)
 
     logging.info('TTS time: %s %s', time.time() - start_time, 'seconds')
-    return speed_adjusted_filepath
+    return filepath
 
 
 def _streamelements_to_speech(text, background_tasks):
@@ -90,23 +85,7 @@ def _streamelements_to_speech(text, background_tasks):
     with open(filepath, "wb") as f:
         f.write(response.content)
 
-    speed_adjusted_filepath = _adjust_audio_speed(filepath)
-    background_tasks.add_task(delete_file, speed_adjusted_filepath)
+    background_tasks.add_task(delete_file, filepath)
 
     logging.info('TTS time: %s %s', time.time() - start_time, 'seconds')
-    return speed_adjusted_filepath
-
-
-def _adjust_audio_speed(audio_filepath):
-    if AUDIO_SPEED is None:
-        return audio_filepath
-
-    audio = AudioSegment.from_mp3(audio_filepath)
-    faster_audio = audio.speedup(playback_speed=float(AUDIO_SPEED))
-
-    speed_adjusted_filepath = f"/tmp/{uuid.uuid4()}.mp3"
-    faster_audio.export(speed_adjusted_filepath, format="mp3")
-
-    delete_file(audio_filepath)
-
-    return speed_adjusted_filepath
+    return filepath
