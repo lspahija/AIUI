@@ -9,3 +9,4 @@ pydub~=0.25.1
 requests~=2.31.0
 edge-tts~=6.1.8
 elevenlabs~=0.2.26
+aiohttp~=3.8.6
