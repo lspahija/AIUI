@@ -11,7 +11,7 @@ from elevenlabs import generate, save
 from util import delete_file
 
 LANGUAGE = os.getenv("LANGUAGE", "en")
-TTS_PROVIDER = os.getenv("TTS_PROVIDER", "EDGETTS")
+TTS_PROVIDER = os.getenv("TTS_PROVIDER", "STREAMELEMENTS")
 
 ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY", None)
 ELEVENLABS_VOICE = os.getenv("ELEVENLABS_VOICE", "EXAVITQu4vr4xnSDxMaL")

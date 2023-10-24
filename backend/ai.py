@@ -25,8 +25,8 @@ async def get_completion(user_prompt, conversation_thus_far):
 async def get_ollama_completion(user_prompt, conversation_thus_far):
     print("getting completion from mistral")
     start_time = time.time()
-    # url = "http://localhost:11434/api/generate"
-    url = "http://host.docker.internal:11434/api/generate"
+    url = "http://localhost:11434/api/generate"
+    # url = "http://host.docker.internal:11434/api/generate"
     payload = {
         "model": "mistral",
         "prompt": f"{user_prompt} Keep your response very short because you are behind a voice interface."
