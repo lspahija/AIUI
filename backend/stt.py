@@ -6,14 +6,14 @@ import uuid
 
 import ffmpeg
 import openai
+from whispercpp import Whisper
 
 from util import delete_file
 
 LANGUAGE = os.getenv("LANGUAGE", "en")
-# whisper_model = "ggml-small.en.bin"
 
-
-whisper_model = "ggml-base.en-q5_0.bin"
+# w = None
+w = Whisper.from_pretrained("/Users/luka/PyCharmProjects/AIUI/backend/ggml-small.en-q4_1.bin")
 
 
 async def transcribe(audio):
@@ -40,15 +40,17 @@ async def transcribe(audio):
 
     logging.debug("calling whisper")
     # transcription = (await openai.Audio.atranscribe("whisper-1", read_file, language=LANGUAGE))["text"]
-    os.system(
-        f'/Users/luka/Projects/whisper.cpp/main "{converted_filepath}" -t 4 -m /Users/luka/Projects/whisper.cpp/models/{whisper_model} -otxt -of ./output')
-    with open("./output.txt", "r") as transcription_file:
-        transcription = transcription_file.read().strip()
+    # os.system(
+    #     f'/Users/luka/Projects/whisper.cpp/main "{converted_filepath}" -t 4 -m /Users/luka/Projects/whisper.cpp/models/{whisper_model} -otxt -of ./output')
+    # with open("./output.txt", "r") as transcription_file:
+    #     transcription = transcription_file.read().strip()
+
+    transcription = w.transcribe_from_file(converted_filepath)
 
     logging.info("STT response received from whisper in %s %s", time.time() - start_time, 'seconds')
     logging.info('user prompt: %s', transcription)
 
     delete_file(converted_filepath)
-    delete_file("./output.txt")
+    # delete_file("./output.txt")
 
     return transcription
