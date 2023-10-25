@@ -36,7 +36,7 @@ async def root():
     return RedirectResponse(url="/index.html")
 
 
-# app.mount("/", StaticFiles(directory="/app/frontend/dist"), name="static")
+app.mount("/", StaticFiles(directory="/app/frontend/dist"), name="static")
 # app.mount("/", StaticFiles(directory="../frontend/dist"), name="static")
 
 

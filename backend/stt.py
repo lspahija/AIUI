@@ -13,7 +13,7 @@ from util import delete_file
 LANGUAGE = os.getenv("LANGUAGE", "en")
 
 # w = None
-w = Whisper.from_pretrained("/Users/luka/PyCharmProjects/AIUI/backend/ggml-small.en-q4_1.bin")
+w = Whisper.from_pretrained("tiny.en")
 
 
 async def transcribe(audio):
@@ -45,7 +45,7 @@ async def transcribe(audio):
     # with open("./output.txt", "r") as transcription_file:
     #     transcription = transcription_file.read().strip()
 
-    transcription = w.transcribe_from_file(converted_filepath)
+    transcription = w.transcribe_from_file(filename=converted_filepath)
 
     logging.info("STT response received from whisper in %s %s", time.time() - start_time, 'seconds')
     logging.info('user prompt: %s', transcription)

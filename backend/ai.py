@@ -7,7 +7,8 @@ import time
 import openai
 import aiohttp
 
-AI_COMPLETION_MODEL = os.getenv("AI_COMPLETION_MODEL", "gpt-3.5-turbo")
+# AI_COMPLETION_MODEL = os.getenv("AI_COMPLETION_MODEL", "mistral")
+AI_COMPLETION_MODEL = "mistral"
 LANGUAGE = os.getenv("LANGUAGE", "en")
 INITIAL_PROMPT = f"You are AIUI - a helpful assistant with a voice interface. Keep your responses very succinct and limited to a single sentence since the user is interacting with you through a voice interface. Always provide your responses in the language that corresponds to the ISO-639-1 code: {LANGUAGE}."
 
@@ -25,8 +26,8 @@ async def get_completion(user_prompt, conversation_thus_far):
 async def get_ollama_completion(user_prompt, conversation_thus_far):
     print("getting completion from mistral")
     start_time = time.time()
-    url = "http://localhost:11434/api/generate"
-    # url = "http://host.docker.internal:11434/api/generate"
+    # url = "http://localhost:11434/api/generate"
+    url = "http://host.docker.internal:11434/api/generate"
     payload = {
         "model": "mistral",
         "prompt": f"{user_prompt} Keep your response very short because you are behind a voice interface."
