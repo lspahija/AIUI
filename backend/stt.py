@@ -12,8 +12,8 @@ from util import delete_file
 
 LANGUAGE = os.getenv("LANGUAGE", "en")
 
-# w = None
-w = Whisper.from_pretrained("tiny.en")
+# w = Whisper.from_pretrained("tiny.en")
+w = Whisper.from_pretrained("./ggml-base.en-q5_0.bin")
 
 
 async def transcribe(audio):

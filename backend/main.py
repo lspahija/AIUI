@@ -15,6 +15,10 @@ from tts import to_speech
 app = FastAPI()
 logging.basicConfig(level=logging.INFO)
 
+@app.get("/test")
+async def test():
+    return await get_completion("who are you?", None)
+
 
 @app.post("/inference")
 async def infer(audio: UploadFile, background_tasks: BackgroundTasks,
@@ -36,8 +40,8 @@ async def root():
     return RedirectResponse(url="/index.html")
 
 
-app.mount("/", StaticFiles(directory="/app/frontend/dist"), name="static")
-# app.mount("/", StaticFiles(directory="../frontend/dist"), name="static")
+# app.mount("/", StaticFiles(directory="/app/frontend/dist"), name="static")
+app.mount("/", StaticFiles(directory="../frontend/dist"), name="static")
 
 
 def _construct_response_header(user_prompt, ai_response):
